@@ -1,0 +1,33 @@
+.view-listings-page {
+  padding-bottom: 60px;
+}
+
+.listings-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.listing-row {
+  display: flex;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--color-border);
+  align-items: flex-start;
+}
+
+.listing-row__image {
+  width: 220px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.listing-row__body {
+  flex: 1;
+}
+
+.listing-row__eyebrow {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0 0 4px 0;
