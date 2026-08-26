@@ -16,3 +16,19 @@ export default function CreateListing() {
       await api.post("/accommodations", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      navigate("/listings");
+    } catch (err) {
+      setError(err.response?.data?.message || "Could not create the listing.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <main className="container create-listing-page">
+      <h1 className="page-heading">Create Listing</h1>
+      {error && <p className="form-error">{error}</p>}
+      <ListingForm onSubmit={handleCreate} submitting={submitting} submitLabel="Create Listing" />
+    </main>
+  );
+}
