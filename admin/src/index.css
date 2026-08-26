@@ -98,3 +98,47 @@ img {
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.form-error {
+  color: var(--color-primary);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.form-success {
+  color: #0a8a3f;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.page-status {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-muted);
+}
+
+.page-heading {
+  padding: 32px 0 20px 0;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 24px;
+  font-size: 1.4rem;
+}
