@@ -23,3 +23,25 @@ export function AuthProvider({ children }) {
       username,
       email,
       password,
+      role: "user",
+    });
+    localStorage.setItem("airbnbUser", JSON.stringify(data));
+    setUser(data);
+    return data;
+  };
+
+  const logout = () => {
+    localStorage.removeItem("airbnbUser");
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
