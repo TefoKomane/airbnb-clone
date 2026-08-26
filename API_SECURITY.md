@@ -82,3 +82,40 @@ Every `.env` file is listed in that folder's `.gitignore`:
 ```
 node_modules/
 .env
+```
+
+This means Git will never track or commit the real `.env` file. Only `.env.example`, which contains placeholder values, gets committed. This is intentional and is the standard way every real company handles this.
+
+### Verify this yourself before your first push
+Run this from inside `server`, `client`, and `admin` in turn:
+```
+git status
+```
+If you ever see `.env` listed as a file ready to be committed, **stop** and do not commit. Check that a `.gitignore` file exists in that folder and that it contains the line `.env`.
+
+### If you ever accidentally commit a real secret
+1. Immediately generate a brand new value (new JWT secret, or a new database password in Atlas) and update your local `.env`
+2. Removing the old commit from history is possible but complicated (`git filter-repo` or the GitHub support process) — in practice for a student project it's simpler and safer to just rotate the leaked secret so the old one is useless, rather than trying to erase history
+3. Never assume a secret is safe again once it has touched a public GitHub repository, even briefly
+
+---
+
+## 4. Password security already built into this project
+
+You do not need to add this yourself, it is already implemented, but you should understand it since your rubric asks about security best practices and you may be asked about it.
+
+* User passwords are never stored as plain text. `server/models/User.js` hashes every password with bcrypt before saving it, using a salt round of 10
+* Login compares the typed password against the hash using `bcrypt.compare`, the plain password is never stored or logged anywhere
+* JWTs expire automatically after the period set in `JWT_EXPIRES_IN` (7 days by default), so a stolen token does not work forever
+* Every private route (creating a listing, viewing your reservations, and so on) passes through the `protect` middleware in `server/middleware/auth.js`, which rejects any request without a valid token
+* Host only actions (creating, updating, deleting a listing) additionally pass through `isHost`, and updates/deletes further check that the listing actually belongs to the logged in host, so one host cannot edit or delete another host's listing
+
+## 5. A few extra things worth doing for full marks on "Security Best Practices"
+
+These are small, optional additions if you want to go further than the baseline above:
+
+* Add basic rate limiting to the login route using the `express-rate-limit` package, so repeated failed login attempts get slowed down
+* Add the `helmet` package to `server.js` (`app.use(helmet())`), which sets a handful of secure HTTP headers automatically
+* Validate the shape of incoming data more strictly using a library like `express-validator`, on top of the manual checks already in the controllers
+
+None of these are required for the project to function, they are the kind of thing you can mention in your README or a demo video as "further hardening I considered" if you want to demonstrate awareness beyond the minimum.
