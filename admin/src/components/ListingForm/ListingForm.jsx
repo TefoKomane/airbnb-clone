@@ -185,3 +185,84 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
 
         <div className="form-group">
           <label htmlFor="serviceFee">Service fee ($)</label>
+          <input
+            id="serviceFee"
+            name="serviceFee"
+            type="number"
+            min="0"
+            value={values.serviceFee}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="occupancyTaxes">Occupancy taxes and fees ($)</label>
+          <input
+            id="occupancyTaxes"
+            name="occupancyTaxes"
+            type="number"
+            min="0"
+            value={values.occupancyTaxes}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          value={values.description}
+          onChange={handleChange}
+        />
+        {errors.description && <p className="form-error">{errors.description}</p>}
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="amenities">Amenities (comma separated)</label>
+        <input
+          id="amenities"
+          name="amenities"
+          placeholder="wifi, kitchen, free parking"
+          value={values.amenities}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="listing-form__checkboxes">
+        <label className="listing-form__checkbox">
+          <input
+            type="checkbox"
+            name="enhancedCleaning"
+            checked={values.enhancedCleaning}
+            onChange={handleChange}
+          />
+          Enhanced cleaning
+        </label>
+        <label className="listing-form__checkbox">
+          <input
+            type="checkbox"
+            name="selfCheckIn"
+            checked={values.selfCheckIn}
+            onChange={handleChange}
+          />
+          Self check-in
+        </label>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="images">Listing images</label>
+        <input id="images" name="images" type="file" accept="image/*" multiple onChange={handleImageChange} />
+        <p className="listing-form__hint">
+          Optional. You can upload jpg, png or webp images, up to 5mb each.
+        </p>
+      </div>
+
+      <button type="submit" className="btn btn-primary listing-form__submit" disabled={submitting}>
+        {submitting ? "Saving..." : submitLabel}
+      </button>
+    </form>
+  );
+}
