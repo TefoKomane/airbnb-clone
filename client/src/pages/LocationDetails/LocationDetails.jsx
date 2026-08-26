@@ -134,3 +134,140 @@ export default function LocationDetails() {
 
         {/* Image gallery: large image left, four smaller images stacked 2 over 2 */}
         <div className="listing-gallery">
+          <div className="listing-gallery__main">
+            <img src={resolveImage(mainImage)} alt={`Main photo of ${listing.title}`} />
+          </div>
+          <div className="listing-gallery__grid">
+            {smallImages.slice(0, 4).map((img, index) => (
+              <img
+                key={index}
+                src={resolveImage(img)}
+                alt={`Photo ${index + 2} of ${listing.title}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Two column layout: details left, cost calculator right */}
+        <div className="listing-columns">
+          <div className="listing-details">
+            <div className="listing-details__host">
+              <div>
+                <h2>
+                  {listing.type} hosted by {listing.host}
+                </h2>
+                <p>
+                  {listing.guests} guests &middot; {listing.bedrooms} bedroom
+                  {listing.bedrooms !== 1 ? "s" : ""} &middot; {listing.bathrooms} bath
+                  {listing.bathrooms !== 1 ? "s" : ""}
+                </p>
+              </div>
+              <div className="listing-details__host-avatar">
+                {listing.host.charAt(0).toUpperCase()}
+              </div>
+            </div>
+
+            <hr />
+
+            <div className="listing-highlights">
+              <div className="listing-highlight">
+                <Icon name="guest" size={22} />
+                <div>
+                  <p className="listing-highlight__title">Entire home</p>
+                  <p className="listing-highlight__desc">You&apos;ll have the place to yourself</p>
+                </div>
+              </div>
+              {listing.enhancedCleaning && (
+                <div className="listing-highlight">
+                  <Icon name="check" size={22} />
+                  <div>
+                    <p className="listing-highlight__title">Enhanced Clean</p>
+                    <p className="listing-highlight__desc">
+                      This host follows an enhanced cleaning process.
+                    </p>
+                  </div>
+                </div>
+              )}
+              {listing.selfCheckIn && (
+                <div className="listing-highlight">
+                  <Icon name="check" size={22} />
+                  <div>
+                    <p className="listing-highlight__title">Self check-in</p>
+                    <p className="listing-highlight__desc">Check yourself in with the keypad.</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <hr />
+
+            <p className="listing-description">{listing.description}</p>
+
+            <hr />
+
+            {/* Accommodation details */}
+            <section className="listing-section">
+              <h3>What this place offers</h3>
+              <ul className="amenities-list">
+                {listing.amenities.map((amenity) => (
+                  <li key={amenity}>
+                    <Icon name="check" size={16} /> {amenity}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <hr />
+
+            {/* nights summary */}
+            {nights > 0 && (
+              <section className="listing-section">
+                <h3>
+                  {nights} night{nights !== 1 ? "s" : ""} in {listing.location}
+                </h3>
+                <p className="listing-page__dates">
+                  {checkIn} &ndash; {checkOut}
+                </p>
+              </section>
+            )}
+
+            <hr />
+
+            {/* Reviews */}
+            <section className="listing-section">
+              <h3>
+                <Icon name="star" size={16} color="#FF385C" filled /> {listing.rating.toFixed(1)} &middot;{" "}
+                {listing.reviews} reviews
+              </h3>
+              <div className="ratings-grid">
+                {Object.entries(listing.specificRatings || {}).map(([key, value]) => (
+                  <div key={key} className="ratings-grid__row">
+                    <span className="ratings-grid__label">{key}</span>
+                    <div className="ratings-grid__bar">
+                      <div style={{ width: `${(value / 5) * 100}%` }} />
+                    </div>
+                    <span>{value.toFixed(1)}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <hr />
+
+            {/* Host details */}
+            <section className="listing-section">
+              <h3>Meet your host, {listing.host}</h3>
+              <p className="listing-description">
+                {listing.host} is a host on this platform and is looking forward to welcoming
+                you.
+              </p>
+            </section>
+
+            <hr />
+
+            {/* House rules, health and safety, cancellation policy */}
+            <section className="listing-section listing-policies">
+              <div>
+                <h4>House rules</h4>
+                <p>Check-in after 3:00 PM &middot; Checkout before 11:00 AM &middot; No parties or events</p>
+              </div>
