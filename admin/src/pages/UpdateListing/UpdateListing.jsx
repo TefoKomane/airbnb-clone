@@ -56,3 +56,28 @@ export default function UpdateListing() {
     location: listing.location,
     description: listing.description,
     guests: listing.guests,
+    bedrooms: listing.bedrooms,
+    bathrooms: listing.bathrooms,
+    price: listing.price,
+    weeklyDiscount: listing.weeklyDiscount,
+    cleaningFee: listing.cleaningFee,
+    serviceFee: listing.serviceFee,
+    occupancyTaxes: listing.occupancyTaxes,
+    amenities: listing.amenities.join(", "),
+    enhancedCleaning: listing.enhancedCleaning,
+    selfCheckIn: listing.selfCheckIn,
+  };
+
+  return (
+    <main className="container update-listing-page">
+      <h1 className="page-heading">Update Listing</h1>
+      {error && <p className="form-error">{error}</p>}
+      <ListingForm
+        initialValues={initialValues}
+        onSubmit={handleUpdate}
+        submitting={submitting}
+        submitLabel="Save Changes"
+      />
+    </main>
+  );
+}
