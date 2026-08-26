@@ -137,3 +137,63 @@ Try logging in with `john@example.com` / `password123` from the header, then sea
 ---
 
 ## 5. Set up the admin dashboard
+
+Open a **third** terminal.
+
+```
+cd admin
+npm install
+cp .env.example .env
+npm run dev
+```
+
+This should open on `http://localhost:5174`. Log in with the host account, `jane@example.com` / `password321`. You should land on **View Listings** and see the sample listings created by the seed script, each with Update and Delete buttons.
+
+Try creating a new listing through **Create Listing** to confirm the whole chain works: admin form → backend API → MongoDB → visible back on the guest site's search page.
+
+---
+
+## 6. Your normal daily workflow from here
+
+Every time you sit down to work on this project:
+
+1. Open the `airbnb-clone` folder in VS Code
+2. Open three terminals
+3. In each one, `cd` into `server`, `client`, and `admin` respectively, and run `npm run dev` in each
+4. Make your changes
+5. Commit your work following `COMMIT_GUIDE.md` as you go, not all at the end
+
+You never need to run `npm install` again unless you add a new package to one of the three `package.json` files.
+
+---
+
+## 7. Common problems and how to fix them
+
+**"Cannot connect to MongoDB" / seed script hangs or errors**
+Almost always your `MONGO_URI` is wrong, your database user's password contains a character that needs URL encoding, or your IP address is not whitelisted in Atlas. See the troubleshooting section in `API_SECURITY.md`.
+
+**Client or admin shows a blank page with errors in the browser console about "Network Error" or failed requests**
+Your backend is not running, or it crashed. Check the terminal running `server` — if it is not printing `Server running on port 5000`, restart it with `npm run dev` and read the error message it prints.
+
+**"Port 5173 is already in use" or similar**
+You already have a dev server running in another terminal or another VS Code window. Close the old one, or let Vite pick a different port when it asks.
+
+**Login works but every other request returns 401 Unauthorized**
+Your JWT_SECRET in `server/.env` was changed after you logged in. Log out and log back in — old tokens become invalid whenever the secret changes.
+
+**Images do not show up on listings you create with uploaded photos**
+Confirm you're accessing the client or admin app through the same backend URL, since uploaded images are served from `http://localhost:5000/uploads/...`. If you deploy the backend later, this will need to point at your deployed backend's real URL instead.
+
+**Nothing shows up in "My Reservations" after you book something**
+Make sure you're logged in as the same account, guest or host, that made or received the booking. Guest reservations show under the client app's Reservations page; a host only sees bookings against listings they own, under the admin ViewReservations page.
+
+**You changed a `.env` file and nothing changed**
+Vite and Node only read `.env` files once, when the dev server starts. Stop the terminal (Ctrl+C) and run `npm run dev` again after any `.env` edit.
+
+---
+
+## 8. When you are ready to submit
+
+* Double check `server/.env`, `client/.env` and `admin/.env` are **not** present in your GitHub repository — only the `.env.example` files should be there
+* Confirm your GitHub repo has each project's `README.md` visible
+* Follow the deployment section notes in `PROJECT_OVERVIEW.md` if your brief requires a live deployed link rather than just local code
