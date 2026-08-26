@@ -30,3 +30,36 @@ export default function Header() {
           <Icon name="logo" size={28} color="#FF385C" filled />
           <span>airbnb</span>
         </Link>
+
+        <form className="site-header__search" onSubmit={handleSearchSubmit}>
+          <Icon name="search" size={16} color="#717171" />
+          <input
+            type="text"
+            placeholder="Search destinations"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            aria-label="Search destinations"
+          />
+          <button type="submit" className="site-header__search-btn" aria-label="Search">
+            <Icon name="search" size={14} color="#fff" />
+          </button>
+        </form>
+
+        <div className="site-header__profile">
+          {!user && (
+            <Link to="/login" className="site-header__host-link">
+              Become a Host
+            </Link>
+          )}
+
+          <button
+            className="site-header__profile-btn"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-haspopup="true"
+            aria-expanded={menuOpen}
+          >
+            <Icon name="menu" size={16} />
+            <span className="site-header__avatar">
+              {user ? user.username.charAt(0).toUpperCase() : <Icon name="guest" size={18} />}
+            </span>
+          </button>
