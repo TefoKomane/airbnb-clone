@@ -82,3 +82,39 @@ export default function ViewListings() {
               </p>
               <h3>{listing.title}</h3>
               <hr />
+              <p className="listing-row__meta">
+                {listing.guests} guests &middot; {listing.type} &middot; {listing.bedrooms} beds
+                &middot; {listing.bathrooms} bath
+              </p>
+              <p className="listing-row__amenities">
+                {listing.amenities.slice(0, 3).join(" \u00b7 ")}
+              </p>
+              <p className="listing-row__rating">
+                {listing.rating.toFixed(1)} &#9733; ({listing.reviews} reviews)
+              </p>
+            </div>
+
+            <div className="listing-row__side">
+              <p className="listing-row__price">
+                ${listing.price} <span>/night</span>
+              </p>
+              <button
+                className="btn btn-update listing-row__btn"
+                onClick={() => navigate(`/listings/${listing._id}/edit`)}
+              >
+                Update
+              </button>
+              <button
+                className="btn btn-primary listing-row__btn"
+                onClick={() => handleDelete(listing._id)}
+                disabled={deletingId === listing._id}
+              >
+                {deletingId === listing._id ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </main>
+  );
+}
