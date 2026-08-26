@@ -20,3 +20,21 @@ export function AuthProvider({ children }) {
 
     localStorage.setItem("airbnbAdmin", JSON.stringify(data));
     setAdmin(data);
+    return data;
+  };
+
+  const logout = () => {
+    localStorage.removeItem("airbnbAdmin");
+    setAdmin(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ admin, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
