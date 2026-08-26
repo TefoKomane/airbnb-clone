@@ -63,3 +63,31 @@ export default function Header() {
               {user ? user.username.charAt(0).toUpperCase() : <Icon name="guest" size={18} />}
             </span>
           </button>
+
+          {menuOpen && (
+            <div className="site-header__dropdown">
+              {user ? (
+                <>
+                  <p className="site-header__greeting">Hi, {user.username}</p>
+                  <Link to="/reservations" onClick={() => setMenuOpen(false)}>
+                    View reservations
+                  </Link>
+                  <button onClick={handleLogout}>Log out</button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" onClick={() => setMenuOpen(false)}>
+                    Log in
+                  </Link>
+                  <Link to="/login" onClick={() => setMenuOpen(false)}>
+                    Sign up
+                  </Link>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+}
