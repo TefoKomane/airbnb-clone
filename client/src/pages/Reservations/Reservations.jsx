@@ -79,3 +79,39 @@ export default function Reservations() {
                 <th>Check in</th>
                 <th>Check out</th>
                 <th>Total</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reservations.map((reservation) => (
+                <tr key={reservation._id}>
+                  <td>
+                    {reservation.accommodation?.title || "Listing removed"}
+                    {reservation.accommodation?.location && (
+                      <span className="reservations-table__location">
+                        {reservation.accommodation.location}
+                      </span>
+                    )}
+                  </td>
+                  <td>{formatDate(reservation.checkIn)}</td>
+                  <td>{formatDate(reservation.checkOut)}</td>
+                  <td>${reservation.totalPrice}</td>
+                  <td>
+                    <button
+                      className="btn btn-outline reservations-table__cancel"
+                      onClick={() => handleCancel(reservation._id)}
+                      disabled={cancellingId === reservation._id}
+                    >
+                      <Icon name="close" size={14} />
+                      {cancellingId === reservation._id ? "Cancelling..." : "Cancel"}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </main>
+  );
+}
