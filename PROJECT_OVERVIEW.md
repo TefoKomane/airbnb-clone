@@ -38,3 +38,43 @@ All three rubrics score the same underlying project from different angles. The b
 ---
 
 ## 3. Admin Frontend rubric, mapped to what exists (`admin/`)
+
+| Rubric line | Where it lives | Status |
+|---|---|---|
+| Top Header | `components/Header/Header.jsx` | Logo, greeting with username, dropdown with view reservations and log out, "Become a Host" link when logged out, nav pills for View Reservations / View Listings / Create Listing |
+| Login Page | `pages/Login/Login.jsx` | Validates email format and password length, shows clear errors, redirects to `/listings` on success, restricted to host role accounts only |
+| Create Listing Page | `pages/CreateListing/CreateListing.jsx`, `components/ListingForm/ListingForm.jsx` | All fields from the brief's recommended data structure, client side validation, image upload via multer on the backend |
+| View Listings Page | `pages/ViewListings/ViewListings.jsx` | Matches the reviewed design closely: image, details, Update and Delete buttons per listing |
+| Update Listing Page | `pages/UpdateListing/UpdateListing.jsx` | Fetches the existing listing, pre-fills every field into the same `ListingForm` component, saves via `PUT` |
+| User Authentication | `context/AuthContext.jsx`, `components/ProtectedRoute/ProtectedRoute.jsx` | JWT stored in localStorage under its own key so it never collides with a guest session, every dashboard page is wrapped in `ProtectedRoute` |
+| Navigation and Routing | `App.jsx` | React Router, URL changes with every view, direct links work on refresh |
+| Styling and Responsiveness | every `.css` file under `admin/src` | Built against the actual Figma export you uploaded, not a guess |
+| Error Handling and Feedback | every page | Every API call is wrapped in try/catch with a user visible message, delete actions confirm before running |
+| Code Quality and Documentation | throughout | Comments explain intent, not obvious syntax |
+
+---
+
+## 4. Airbnb Frontend rubric, mapped to what exists (`client/`)
+
+| Rubric line | Where it lives | Status |
+|---|---|---|
+| Hero Banner | `pages/Home/Home.jsx`, `.hero` in `Home.css` | Matches the reviewed design: full width image, dark overlay, "I'm flexible" call to action |
+| Inspiration Section | `data/inspirationData.js`, inspiration grid in `Home.jsx` | Four cards matching the design's hotel names and colours |
+| Discover Experiences | `data/experiencesData.js` | Two sections, titles, buttons |
+| ShopAirbnb Section | Home.jsx shop section | Title, button, layered gift card graphic |
+| Future Getaways Section | `data/futureGetaways.js`, tab logic in `Home.jsx` | Working tabs, first tab shows a real destination grid matching the design |
+| Footer | `components/Footer/Footer.jsx` | Four link columns plus the copyright bar, matches the design |
+| Location Filter | `pages/Location/Location.jsx` | Filters real data from MongoDB by location, syncs with the URL so results are shareable/bookmarkable |
+| Location Cards | `components/LocationCard/LocationCard.jsx` | Image left, details right, heart save toggle, rating, price — matches the reviewed search results design closely |
+| Location Details Heading | `pages/LocationDetails/LocationDetails.jsx` | Title, rating, reviews link, location |
+| Image Gallery | same file, `.listing-gallery` | Large image left, four smaller images in a 2x2 grid, matches the design |
+| Cost Calculator | same file, `costBreakdown` useMemo block | Genuinely functional: recalculates nights, applies the weekly discount only at 7+ nights, adds cleaning/service/occupancy fees, live total, submits a real reservation to MongoDB |
+| Static Information Sections | same file | Accommodation details, where you'll sleep, what this place offers, reviews with a rating breakdown, host details, house rules/health and safety/cancellation policy |
+| Top Header Filter and Profile | `components/Header/Header.jsx` | Search bar, profile dropdown, differentiates logged in vs logged out |
+| Code Quality and Documentation | throughout | |
+
+---
+
+## 5. What is genuinely still on you
+
+Being direct about this rather than implying the project is "done" the moment code exists:
