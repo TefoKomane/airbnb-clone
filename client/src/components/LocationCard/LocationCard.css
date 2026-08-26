@@ -69,3 +69,34 @@
 .location-card__side {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  min-width: 100px;
+}
+
+.location-card__heart {
+  background: none;
+  border: none;
+}
+
+.location-card__price {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.location-card__price span {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 600px) {
+  .location-card {
+    flex-wrap: wrap;
+  }
+  .location-card__image-wrap {
+    width: 100%;
+    height: 200px;
+  }
+}
