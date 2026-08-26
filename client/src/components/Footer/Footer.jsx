@@ -51,3 +51,27 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container site-footer__columns">
         {linkColumns.map((column) => (
+          <div key={column.heading}>
+            <h4>{column.heading}</h4>
+            <ul>
+              {column.links.map((link) => (
+                <li key={link}>
+                  <a href="#top">{link}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <div className="site-footer__bottom container">
+        <p>&copy; {new Date().getFullYear()} Airbnb Clone, Inc. &middot; Privacy &middot; Terms &middot; Sitemap</p>
+        <div className="site-footer__meta">
+          <span>English (US)</span>
+          <span>$ USD</span>
+          <Icon name="search" size={16} />
+        </div>
+      </div>
+    </footer>
+  );
+}
