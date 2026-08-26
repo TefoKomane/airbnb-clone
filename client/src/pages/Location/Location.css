@@ -1,0 +1,38 @@
+.location-page {
+  padding: 32px 24px 60px 24px;
+}
+
+.location-filter {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 24px;
+  max-width: 500px;
+}
+
+.location-filter label {
+  display: none;
+}
+
+.location-filter input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.location-filter .btn {
+  border-radius: 999px;
+}
+
+.location-page__heading {
+  font-size: 1.4rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 16px;
+  margin-bottom: 0;
+}
+
+.location-page__list {
+  max-width: 900px;
+}
