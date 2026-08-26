@@ -24,3 +24,29 @@ export default function LocationCard({ accommodation }) {
     images,
   } = accommodation;
 
+  const image =
+    images && images.length > 0
+      ? images[0].startsWith("/uploads")
+        ? `${import.meta.env.VITE_API_URL.replace("/api", "")}${images[0]}`
+        : images[0]
+      : "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80";
+
+  return (
+    <article className="location-card" onClick={() => navigate(`/listing/${_id}`)}>
+      <div className="location-card__image-wrap">
+        <img src={image} alt={`Photo of ${title}`} />
+      </div>
+
+      <div className="location-card__body">
+        <div>
+          <p className="location-card__eyebrow">
+            {type} in {location}
+          </p>
+          <h3 className="location-card__title">{title}</h3>
+          <hr />
+          <p className="location-card__meta">
+            {guests} guests &middot; {type} &middot; {bedrooms} beds &middot; {bathrooms} bath
+          </p>
+          <p className="location-card__amenities">{amenities.slice(0, 3).join(" \u00b7 ")}</p>
+          <p className="location-card__rating">
+            <Icon name="star" size={14} color="#FF385C" filled /> {rating.toFixed(1)}{" "}
