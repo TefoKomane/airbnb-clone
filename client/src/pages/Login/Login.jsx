@@ -81,3 +81,39 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          {error && <p className="form-error">{error}</p>}
+
+          <button type="submit" className="btn btn-primary login-card__submit" disabled={submitting}>
+            {submitting ? "Please wait..." : mode === "login" ? "Log in" : "Sign up"}
+          </button>
+        </form>
+
+        <p className="login-card__switch">
+          {mode === "login" ? "New here?" : "Already have an account?"}{" "}
+          <button onClick={() => setMode(mode === "login" ? "signup" : "login")}>
+            {mode === "login" ? "Create an account" : "Log in"}
+          </button>
+        </p>
+
+        {mode === "login" && (
+          <p className="login-card__hint">
+            Try the sample account: john@example.com / password123
+          </p>
+        )}
+      </div>
+    </main>
+  );
+}
