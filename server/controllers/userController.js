@@ -56,3 +56,28 @@ const loginUser = async (req, res, next) => {
       res.json({
         _id: user._id,
         username: user.username,
+        email: user.email,
+        role: user.role,
+        token: generateToken(user._id, user.role),
+      });
+    } else {
+      res.status(401);
+      throw new Error("Invalid email or password");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get the logged in user's own profile
+// @route   GET /api/users/me
+// @access  Private
+const getMe = async (req, res, next) => {
+  try {
+    res.json(req.user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { registerUser, loginUser, getMe };
