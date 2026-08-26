@@ -30,3 +30,36 @@ export default function ViewReservations() {
     const confirmed = window.confirm("Delete this reservation?");
     if (!confirmed) return;
 
+    setDeletingId(id);
+    try {
+      await api.delete(`/reservations/${id}`);
+      setReservations((prev) => prev.filter((r) => r._id !== id));
+    } catch (err) {
+      setError("Could not delete that reservation.");
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const formatDate = (dateString) => new Date(dateString).toLocaleDateString("en-GB");
+
+  if (loading) return <p className="page-status">Loading reservations...</p>;
+
+  return (
+    <main className="container view-reservations-page">
+      <h1 className="page-heading">My Reservations</h1>
+
+      {error && <p className="form-error">{error}</p>}
+
+      {!loading && reservations.length === 0 && !error && (
+        <p className="page-status">No reservations have been made on your listings yet.</p>
+      )}
+
+      {reservations.length > 0 && (
+        <div className="reservations-table-wrap">
+          <table className="reservations-table">
+            <thead>
+              <tr>
+                <th>Booked by</th>
+                <th>Property</th>
+                <th>Checkin</th>
