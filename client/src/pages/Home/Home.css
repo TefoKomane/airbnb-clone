@@ -1,0 +1,98 @@
+.hero {
+  position: relative;
+  height: 70vh;
+  min-height: 420px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
+    url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__content h1 {
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.hero__cta {
+  background-color: #fff;
+  color: var(--color-primary);
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 12px 28px;
+}
+
+.section {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.inspiration-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.inspiration-card {
+  border: none;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  color: #fff;
+  text-align: left;
+  padding: 0;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.inspiration-card__image {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.inspiration-card__text {
+  position: relative;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent 70%);
+}
+
+.inspiration-card__title {
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.inspiration-card__subtitle {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.experiences-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
