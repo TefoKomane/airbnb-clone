@@ -151,3 +151,69 @@ const updateAccommodation = async (req, res, next) => {
       "bathrooms",
       "price",
       "weeklyDiscount",
+      "cleaningFee",
+      "serviceFee",
+      "occupancyTaxes",
+      "enhancedCleaning",
+      "selfCheckIn",
+    ];
+
+    updatableFields.forEach((field) => {
+      if (req.body[field] !== undefined) {
+        accommodation[field] = req.body[field];
+      }
+    });
+
+    if (req.body.amenities) {
+      accommodation.amenities = Array.isArray(req.body.amenities)
+        ? req.body.amenities
+        : req.body.amenities.split(",").map((a) => a.trim()).filter(Boolean);
+    }
+
+    // new uploaded images are added on to the existing ones
+    if (req.files && req.files.length > 0) {
+      const newImages = req.files.map((file) => `/uploads/${file.filename}`);
+      accommodation.images = [...accommodation.images, ...newImages];
+    } else if (req.body.images) {
+      accommodation.images = req.body.images;
+    }
+
+    const updated = await accommodation.save();
+    res.json(updated);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Delete an accommodation listing
+// @route   DELETE /api/accommodations/:id
+// @access  Private (host only, and only the host who owns the listing)
+const deleteAccommodation = async (req, res, next) => {
+  try {
+    const accommodation = await Accommodation.findById(req.params.id);
+
+    if (!accommodation) {
+      res.status(404);
+      throw new Error("Accommodation not found");
+    }
+
+    if (accommodation.hostId.toString() !== req.user._id.toString()) {
+      res.status(403);
+      throw new Error("You are not allowed to delete this listing");
+    }
+
+    await accommodation.deleteOne();
+    res.json({ message: "Accommodation removed", id: req.params.id });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  createAccommodation,
+  getAccommodations,
+  getAccommodationById,
+  getMyAccommodations,
+  updateAccommodation,
+  deleteAccommodation,
+};
