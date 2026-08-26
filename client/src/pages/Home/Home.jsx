@@ -94,3 +94,45 @@ export default function Home() {
         </section>
 
         {/* Inspiration for future getaways, tabbed section */}
+        <section className="section">
+          <h2>Inspiration for future getaways</h2>
+          <div className="getaway-tabs" role="tablist">
+            {futureGetaways.tabs.map((tab, index) => (
+              <button
+                key={tab}
+                role="tab"
+                aria-selected={activeTab === index}
+                className={`getaway-tab ${activeTab === index ? "getaway-tab--active" : ""}`}
+                onClick={() => setActiveTab(index)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          {activeTab === 0 ? (
+            <ul className="getaway-list">
+              {futureGetaways.places.map((place) => (
+                <li key={place.city}>
+                  <button onClick={() => goToSearch(place.city)}>
+                    <span className="getaway-list__city">{place.city}</span>
+                    <span className="getaway-list__region">{place.region}</span>
+                  </button>
+                </li>
+              ))}
+              <li>
+                <button className="getaway-list__more">Show more</button>
+              </li>
+            </ul>
+          ) : (
+            <p className="getaway-placeholder">
+              More destinations for this category are coming soon.
+            </p>
+          )}
+        </section>
+      </div>
+
+      <Footer />
+    </main>
+  );
+}
