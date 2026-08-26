@@ -40,3 +40,45 @@ This is fine for a student project running locally and for most deployment platf
    ```
 5. Replace `<password>` with the password you copied earlier
 
+### A password gotcha that catches almost everyone
+If your database password contains any of these characters: `@ : / ? # [ ] %`, the connection string will silently fail or connect to the wrong place. You need to URL encode them. The most common one is `@`, which becomes `%40`.
+
+If this happens to you, it is simpler to just go back to Database Access, click Edit on your user, and generate a new password without special characters, made only of letters and numbers.
+
+### Add your database name to the string
+Right after `.net/` and before the `?`, add a database name of your choosing:
+```
+mongodb+srv://airbnb-admin:yourpassword@airbnb-clone-cluster.xxxxx.mongodb.net/airbnb-clone?retryWrites=true&w=majority
+```
+This is the value that goes into `MONGO_URI` in `server/.env`. MongoDB creates the `airbnb-clone` database automatically the first time you write data to it, you do not need to create it manually.
+
+---
+
+## 2. JWT secret — what keeps your login tokens secure
+
+`JWT_SECRET` is a private string only your server knows. It is used to sign every login token, and to verify that a token presented later has not been tampered with. If someone else knows this string, they could forge a valid login token for any user without a password.
+
+### How to generate one properly
+Never type something like `mysecret123` here. Generate a genuinely random string instead.
+
+**Option 1, using Node (recommended, no extra tools needed):**
+```
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
+Run this in any terminal. It prints a 128 character random string. Copy the whole thing into `JWT_SECRET` in your `.env`.
+
+**Option 2, using an online generator:**
+If you'd rather not use the terminal, search for "random string generator" and generate at least 64 characters, letters and numbers only. Multiple independent generators exist online for this purpose since it is a common developer need.
+
+Whichever value you choose, treat it exactly like a password. Do not reuse it anywhere else, and do not share it in a screenshot, a Slack message, or a GitHub issue.
+
+---
+
+## 3. Keeping every secret out of GitHub
+
+This project is already set up correctly for this, but you should understand why, and verify it yourself before you push.
+
+Every `.env` file is listed in that folder's `.gitignore`:
+```
+node_modules/
+.env
