@@ -50,3 +50,26 @@ export default function LocationCard({ accommodation }) {
           <p className="location-card__amenities">{amenities.slice(0, 3).join(" \u00b7 ")}</p>
           <p className="location-card__rating">
             <Icon name="star" size={14} color="#FF385C" filled /> {rating.toFixed(1)}{" "}
+            <span>({reviews} reviews)</span>
+          </p>
+        </div>
+      </div>
+
+      <div className="location-card__side">
+        <button
+          className="location-card__heart"
+          onClick={(e) => {
+            e.stopPropagation();
+            setSaved((s) => !s);
+          }}
+          aria-label={saved ? "Remove from saved" : "Save this listing"}
+        >
+          <Icon name="heart" size={20} color={saved ? "#FF385C" : "#222"} filled={saved} />
+        </button>
+        <p className="location-card__price">
+          ${price} <span>/night</span>
+        </p>
+      </div>
+    </article>
+  );
+}
