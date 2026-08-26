@@ -40,3 +40,45 @@ export default function ViewListings() {
 
   const handleDelete = async (id) => {
     const confirmed = window.confirm("Delete this listing? This cannot be undone.");
+    if (!confirmed) return;
+
+    setDeletingId(id);
+    try {
+      await api.delete(`/accommodations/${id}`);
+      setListings((prev) => prev.filter((l) => l._id !== id));
+    } catch (err) {
+      setError("Could not delete that listing. Please try again.");
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  if (loading) return <p className="page-status">Loading your listings...</p>;
+
+  return (
+    <main className="container view-listings-page">
+      <h1 className="page-heading">My Hotel List</h1>
+
+      {error && <p className="form-error">{error}</p>}
+
+      {!loading && listings.length === 0 && !error && (
+        <p className="page-status">
+          You have not created any listings yet. Use Create Listing to add your first one.
+        </p>
+      )}
+
+      <div className="listings-list">
+        {listings.map((listing) => (
+          <div key={listing._id} className="listing-row">
+            <img
+              src={resolveImage(listing.images && listing.images[0])}
+              alt={`Photo of ${listing.title}`}
+              className="listing-row__image"
+            />
+
+            <div className="listing-row__body">
+              <p className="listing-row__eyebrow">
+                {listing.bedrooms} Room Bedroom &middot; {listing.type} in {listing.location}
+              </p>
+              <h3>{listing.title}</h3>
+              <hr />
