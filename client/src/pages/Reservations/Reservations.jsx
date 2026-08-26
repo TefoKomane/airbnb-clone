@@ -38,3 +38,44 @@ export default function Reservations() {
     fetchReservations();
   }, [user, navigate]);
 
+  const handleCancel = async (id) => {
+    setCancellingId(id);
+    try {
+      await api.delete(`/reservations/${id}`);
+      setReservations((prev) => prev.filter((r) => r._id !== id));
+    } catch (err) {
+      setError("Could not cancel that reservation. Please try again.");
+    } finally {
+      setCancellingId(null);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB");
+  };
+
+  if (loading) return <p className="page-status">Loading your reservations...</p>;
+
+  return (
+    <main className="container reservations-page">
+      <h1>My Reservations</h1>
+
+      {error && <p className="form-error">{error}</p>}
+
+      {!loading && reservations.length === 0 && !error && (
+        <p className="page-status">
+          You have not made any reservations yet.{" "}
+          <Link to="/search">Start exploring stays</Link>
+        </p>
+      )}
+
+      {reservations.length > 0 && (
+        <div className="reservations-table-wrap">
+          <table className="reservations-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Check in</th>
+                <th>Check out</th>
+                <th>Total</th>
