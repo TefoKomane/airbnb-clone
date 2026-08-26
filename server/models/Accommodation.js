@@ -36,3 +36,41 @@ const accommodationSchema = new mongoose.Schema(
     bathrooms: {
       type: Number,
       required: true,
+      min: 0,
+    },
+    price: {
+      type: Number,
+      required: [true, "Price per night is required"],
+      min: 0,
+    },
+    weeklyDiscount: {
+      type: Number,
+      default: 0,
+    },
+    cleaningFee: {
+      type: Number,
+      default: 0,
+    },
+    serviceFee: {
+      type: Number,
+      default: 0,
+    },
+    occupancyTaxes: {
+      type: Number,
+      default: 0,
+    },
+    amenities: {
+      type: [String],
+      default: [],
+    },
+    images: {
+      type: [String],
+      default: [],
+    },
+    rating: {
+      type: Number,
+      default: 4.5,
+      min: 0,
+      max: 5,
+    },
+    reviews: {
