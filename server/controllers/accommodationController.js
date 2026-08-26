@@ -74,3 +74,80 @@ const createAccommodation = async (req, res, next) => {
 const getAccommodations = async (req, res, next) => {
   try {
     const filter = {};
+
+    if (req.query.location) {
+      // case insensitive partial match so "new" also matches "New York"
+      filter.location = { $regex: req.query.location, $options: "i" };
+    }
+
+    const accommodations = await Accommodation.find(filter).sort({
+      createdAt: -1,
+    });
+
+    res.json(accommodations);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get a single accommodation by id
+// @route   GET /api/accommodations/:id
+// @access  Public
+const getAccommodationById = async (req, res, next) => {
+  try {
+    const accommodation = await Accommodation.findById(req.params.id);
+
+    if (!accommodation) {
+      res.status(404);
+      throw new Error("Accommodation not found");
+    }
+
+    res.json(accommodation);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get all accommodations that belong to the logged in host
+// @route   GET /api/accommodations/host/mine
+// @access  Private (host only)
+const getMyAccommodations = async (req, res, next) => {
+  try {
+    const accommodations = await Accommodation.find({
+      hostId: req.user._id,
+    }).sort({ createdAt: -1 });
+
+    res.json(accommodations);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Update an accommodation listing
+// @route   PUT /api/accommodations/:id
+// @access  Private (host only, and only the host who owns the listing)
+const updateAccommodation = async (req, res, next) => {
+  try {
+    const accommodation = await Accommodation.findById(req.params.id);
+
+    if (!accommodation) {
+      res.status(404);
+      throw new Error("Accommodation not found");
+    }
+
+    // make sure a host can only edit their own listings
+    if (accommodation.hostId.toString() !== req.user._id.toString()) {
+      res.status(403);
+      throw new Error("You are not allowed to edit this listing");
+    }
+
+    const updatableFields = [
+      "title",
+      "type",
+      "location",
+      "description",
+      "guests",
+      "bedrooms",
+      "bathrooms",
+      "price",
+      "weeklyDiscount",
