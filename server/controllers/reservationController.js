@@ -40,3 +40,46 @@ const createReservation = async (req, res, next) => {
       host: accommodation.hostId,
       checkIn,
       checkOut,
+      guests,
+      totalPrice,
+    });
+
+    const populated = await reservation.populate([
+      { path: "accommodation", select: "title location images price" },
+      { path: "guest", select: "username email" },
+    ]);
+
+    res.status(201).json(populated);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get all reservations made on listings owned by the logged in host
+// @route   GET /api/reservations/host
+// @access  Private (host only)
+const getReservationsByHost = async (req, res, next) => {
+  try {
+    const reservations = await Reservation.find({ host: req.user._id })
+      .populate("accommodation", "title location images")
+      .populate("guest", "username email")
+      .sort({ createdAt: -1 });
+
+    res.json(reservations);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get all reservations made by the logged in user
+// @route   GET /api/reservations/user
+// @access  Private
+const getReservationsByUser = async (req, res, next) => {
+  try {
+    const reservations = await Reservation.find({ guest: req.user._id })
+      .populate("accommodation", "title location images price")
+      .sort({ createdAt: -1 });
+
+    res.json(reservations);
+  } catch (error) {
+    next(error);
