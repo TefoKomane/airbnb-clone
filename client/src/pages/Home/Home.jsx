@@ -46,3 +46,51 @@ export default function Home() {
                   <p className="inspiration-card__subtitle">{item.subtitle}</p>
                 </div>
               </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Discover Airbnb Experiences */}
+        <section className="section">
+          <h2>Discover Airbnb Experiences</h2>
+          <div className="experiences-grid">
+            {experiencesData.map((item) => (
+              <div
+                key={item.id}
+                className="experience-card"
+                style={{ backgroundColor: item.color }}
+              >
+                <h3>{item.title}</h3>
+                <button className="btn btn-outline experience-card__btn">
+                  {item.buttonLabel}
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ShopAirbnb Section */}
+        <section className="section shop-section">
+          <div className="shop-section__text">
+            <h2>Shop Airbnb gift cards</h2>
+            <button className="btn btn-dark">Learn more</button>
+          </div>
+          <div className="shop-section__cards">
+            <div className="shop-card shop-card--1" />
+            <div className="shop-card shop-card--2">
+              <Icon name="logo" size={26} color="#fff" filled />
+            </div>
+            <div className="shop-card shop-card--3" />
+          </div>
+        </section>
+
+        {/* Questions about hosting banner */}
+        <section className="section hosting-banner">
+          <div className="hosting-banner__overlay" />
+          <div className="hosting-banner__content">
+            <h2>Questions about hosting?</h2>
+            <button className="btn hosting-banner__btn">Ask a Superhost</button>
+          </div>
+        </section>
+
+        {/* Inspiration for future getaways, tabbed section */}
