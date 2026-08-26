@@ -1,0 +1,44 @@
+.listing-form {
+  max-width: 720px;
+}
+
+.listing-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+}
+
+.listing-form__checkboxes {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.listing-form__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.listing-form__checkbox input {
+  width: auto;
+}
+
+.listing-form__hint {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin: 6px 0 0 0;
+}
+
+.listing-form__submit {
+  margin-top: 10px;
+  padding: 14px 28px;
+}
+
+@media (max-width: 700px) {
+  .listing-form__grid {
+    grid-template-columns: 1fr;
+  }
+}
