@@ -116,3 +116,122 @@
   font-size: 14px;
 }
 
+.listing-description {
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.listing-section h3 {
+  margin: 0 0 16px 0;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.amenities-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.amenities-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.ratings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 32px;
+}
+
+.ratings-grid__row {
+  display: grid;
+  grid-template-columns: 100px 1fr 30px;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.ratings-grid__bar {
+  height: 4px;
+  background-color: var(--color-border);
+  border-radius: 4px;
+}
+
+.ratings-grid__bar div {
+  height: 100%;
+  background-color: #111;
+  border-radius: 4px;
+}
+
+.listing-policies {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.listing-policies h4 {
+  margin: 0 0 6px 0;
+  font-size: 14px;
+}
+
+.listing-policies p {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Cost calculator */
+.cost-calculator {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+  height: fit-content;
+  position: sticky;
+  top: 90px;
+}
+
+.cost-calculator__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+
+.cost-calculator__price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cost-calculator__price span {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.cost-calculator__rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  margin: 0;
+}
+
+.cost-calculator__dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
