@@ -27,3 +27,32 @@ export default function UpdateListing() {
       }
     };
     fetchListing();
+  }, [id]);
+
+  const handleUpdate = async (formData) => {
+    setError("");
+    setSubmitting(true);
+    try {
+      await api.put(`/accommodations/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      navigate("/listings");
+    } catch (err) {
+      setError(err.response?.data?.message || "Could not update the listing.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (loading) return <p className="page-status">Loading listing...</p>;
+  if (error && !listing) return <p className="page-status">{error}</p>;
+  if (!listing) return null;
+
+  // the form component fills its fields from this object,
+  // so the admin sees the existing listing data immediately, pre-filled
+  const initialValues = {
+    title: listing.title,
+    type: listing.type,
+    location: listing.location,
+    description: listing.description,
+    guests: listing.guests,
