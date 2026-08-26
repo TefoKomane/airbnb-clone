@@ -54,3 +54,27 @@ export default function Location() {
         <button type="submit" className="btn btn-primary">
           Search
         </button>
+      </form>
+
+      <h1 className="location-page__heading">
+        {loading
+          ? "Searching..."
+          : `${accommodations.length}+ stays${activeLocation ? ` in ${activeLocation}` : ""}`}
+      </h1>
+
+      {error && <p className="form-error">{error}</p>}
+
+      {!loading && accommodations.length === 0 && !error && (
+        <p className="page-status">
+          No stays matched that search. Try a different location.
+        </p>
+      )}
+
+      <div className="location-page__list">
+        {accommodations.map((item) => (
+          <LocationCard key={item._id} accommodation={item} />
+        ))}
+      </div>
+    </main>
+  );
+}
