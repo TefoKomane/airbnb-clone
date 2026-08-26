@@ -24,3 +24,30 @@ const linkColumns = [
     ],
   },
   {
+    heading: "Hosting",
+    links: [
+      "Try hosting",
+      "AirCover: protection for Hosts",
+      "Explore hosting resources",
+      "Visit our community forum",
+      "How to host responsibly",
+    ],
+  },
+  {
+    heading: "About",
+    links: [
+      "Newsroom",
+      "Learn about new features",
+      "Letter from our founders",
+      "Careers",
+      "Investors",
+      "Airbnb Luxe",
+    ],
+  },
+];
+
+export default function Footer() {
+  return (
+    <footer className="site-footer">
+      <div className="container site-footer__columns">
+        {linkColumns.map((column) => (
