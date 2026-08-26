@@ -271,3 +271,120 @@ export default function LocationDetails() {
                 <h4>House rules</h4>
                 <p>Check-in after 3:00 PM &middot; Checkout before 11:00 AM &middot; No parties or events</p>
               </div>
+              <div>
+                <h4>Health &amp; safety</h4>
+                <p>Committed to the platform&apos;s enhanced cleaning process.</p>
+              </div>
+              <div>
+                <h4>Cancellation policy</h4>
+                <p>Free cancellation for 48 hours after booking.</p>
+              </div>
+            </section>
+          </div>
+
+          {/* Cost calculator */}
+          <aside className="cost-calculator">
+            <div className="cost-calculator__header">
+              <p className="cost-calculator__price">
+                ${listing.price} <span>/ night</span>
+              </p>
+              <p className="cost-calculator__rating">
+                <Icon name="star" size={14} color="#FF385C" filled /> {listing.rating.toFixed(1)}{" "}
+                &middot; {listing.reviews} reviews
+              </p>
+            </div>
+
+            <form onSubmit={handleReserve}>
+              <div className="cost-calculator__dates">
+                <div className="form-group">
+                  <label htmlFor="checkIn">CHECK-IN</label>
+                  <input
+                    id="checkIn"
+                    type="date"
+                    value={checkIn}
+                    onChange={(e) => setCheckIn(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="checkOut">CHECKOUT</label>
+                  <input
+                    id="checkOut"
+                    type="date"
+                    value={checkOut}
+                    onChange={(e) => setCheckOut(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="guests">GUESTS</label>
+                <select
+                  id="guests"
+                  value={guestCount}
+                  onChange={(e) => setGuestCount(Number(e.target.value))}
+                >
+                  {Array.from({ length: listing.guests }, (_, i) => i + 1).map((n) => (
+                    <option key={n} value={n}>
+                      {n} guest{n !== 1 ? "s" : ""}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button type="submit" className="btn btn-primary cost-calculator__reserve" disabled={submitting}>
+                {submitting ? "Reserving..." : "Reserve"}
+              </button>
+
+              <p className="cost-calculator__note">You won&apos;t be charged yet</p>
+
+              {bookingError && <p className="form-error">{bookingError}</p>}
+              {bookingSuccess && <p className="cost-calculator__success">{bookingSuccess}</p>}
+
+              {costBreakdown && (
+                <div className="cost-calculator__breakdown">
+                  <div className="cost-row">
+                    <span>
+                      ${listing.price} &times; {nights} night{nights !== 1 ? "s" : ""}
+                    </span>
+                    <span>${costBreakdown.subtotal}</span>
+                  </div>
+                  {costBreakdown.weeklyDiscount > 0 && (
+                    <div className="cost-row cost-row--discount">
+                      <span>Weekly discount</span>
+                      <span>-${costBreakdown.weeklyDiscount}</span>
+                    </div>
+                  )}
+                  <div className="cost-row">
+                    <span>Cleaning fee</span>
+                    <span>${costBreakdown.cleaningFee}</span>
+                  </div>
+                  <div className="cost-row">
+                    <span>Service fee</span>
+                    <span>${costBreakdown.serviceFee}</span>
+                  </div>
+                  <div className="cost-row">
+                    <span>Occupancy taxes and fees</span>
+                    <span>${costBreakdown.occupancyTaxes}</span>
+                  </div>
+                  <hr />
+                  <div className="cost-row cost-row--total">
+                    <span>Total</span>
+                    <span>${costBreakdown.total}</span>
+                  </div>
+                </div>
+              )}
+            </form>
+
+            <button className="listing-report">
+              <Icon name="close" size={14} /> Report this listing
+            </button>
+          </aside>
+        </div>
+      </div>
+
+      <Footer />
+    </main>
+  );
+}
