@@ -29,3 +29,30 @@
   color: var(--color-text-muted);
 }
 
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+.site-footer__bottom {
+  border-top: 1px solid var(--color-border);
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.site-footer__meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (max-width: 700px) {
+  .site-footer__columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
