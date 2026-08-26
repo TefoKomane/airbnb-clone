@@ -78,3 +78,38 @@ All three rubrics score the same underlying project from different angles. The b
 ## 5. What is genuinely still on you
 
 Being direct about this rather than implying the project is "done" the moment code exists:
+
+### Testing (backend rubric, "Testing and Validation")
+Nothing in this codebase currently has automated tests. To score well here, at minimum:
+1. Install Thunder Client or the REST Client extension in VS Code (see `SETUP_GUIDE.md`)
+2. Manually test every endpoint listed in `server/README.md`, including the failure cases — wrong password, missing fields, deleting someone else's listing while logged in as a different host
+3. If you want actual automated tests for a higher mark, look into `jest` and `supertest`, and write a handful of tests hitting `/api/accommodations` and `/api/users/login`. This is optional extra work beyond what is built, but it is what "Comprehensive testing" in the rubric's top band is asking for
+
+### Deployment (backend rubric, "Deployment and Environment Configuration")
+This project currently only runs locally. If your brief requires a live deployed link:
+* **Backend**: Render or Railway both have straightforward free tiers for a Node/Express API. You will set your `MONGO_URI` and `JWT_SECRET` as environment variables in their dashboard, the same values from your local `.env`, never commit them
+* **Client and Admin**: Vercel or Netlify, both are built for exactly this kind of Vite/React app. You will set `VITE_API_URL` in their environment variable settings to point at your deployed backend's real URL, not `localhost`
+* Once deployed, update `CLIENT_URL` and `ADMIN_URL` in your backend's environment variables to your real deployed frontend URLs, or your CORS setup will block real requests
+
+### Images
+Every listing currently uses either an Unsplash URL as a placeholder, or whatever you upload through the admin Create Listing form. For a fully polished submission, upload real photos through the admin dashboard for each sample listing rather than leaving the generic placeholders in place, and note their source/licence in your `README.md` if you use stock photography, per the brief's "image credits" expectation from the wider assignment pattern.
+
+### Performance and Presentation polish
+These two rubric lines are inherently about the finished feel of the product, which only comes from you actually clicking through it repeatedly and fixing what feels off: check loading states show correctly, check error messages read naturally, check nothing looks cut off at your actual screen size, check the browser console for warnings.
+
+### Your own understanding
+Read every file you commit, not just the ones you personally struggled with. If your course includes any kind of walkthrough, demo, or viva, you need to be able to explain what `protect` and `isHost` do, why the cost calculator only applies the weekly discount at 7+ nights, and why the JWT is stored under different localStorage keys in `client` versus `admin`. Code you cannot explain is code you should not submit as entirely your own understanding.
+
+---
+
+## 6. Suggested pacing across your week
+
+Given you said you want to start today and pace towards Friday, ahead of a Tuesday deadline:
+
+* **Today**: Get all three apps running locally by following `SETUP_GUIDE.md` end to end. Do not write any new code today, just get the existing project working and understand the folder structure.
+* **Day 2**: Read through `server/` fully, run every endpoint manually with Thunder Client, understand the auth flow. Fix anything that does not behave as expected in your environment.
+* **Day 3**: Read through and click through `client/` fully. Make a booking end to end. Upload real images through `admin/` and confirm they appear correctly on the guest site.
+* **Day 4 (Friday)**: Polish pass — responsive check at different screen widths, fix any visual issues, write or extend automated tests if you are going for the top band there, and start on deployment if your brief requires a live link.
+* **Remaining days before Tuesday**: Deployment, a full re-test of the deployed version (deployed apps commonly break on CORS or environment variable mistakes even when local worked perfectly), and recording whatever demo/walkthrough your submission requires.
+
+This leaves you real buffer time before Tuesday specifically because deployment is the step most likely to eat unexpected hours.
