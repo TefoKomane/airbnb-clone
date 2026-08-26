@@ -86,3 +86,41 @@ const runSeed = async () => {
       hostId: host._id,
       enhancedCleaning: true,
       selfCheckIn: true,
+    },
+    {
+      title: "Sandton City Hotel Suite",
+      type: "Entire home",
+      location: "Johannesburg",
+      description:
+        "A comfortable suite close to Sandton City with easy access to restaurants, shops and public transport.",
+      guests: 6,
+      bedrooms: 3,
+      bathrooms: 3,
+      price: 325,
+      weeklyDiscount: 0,
+      cleaningFee: 40,
+      serviceFee: 45,
+      occupancyTaxes: 20,
+      amenities: ["wifi", "kitchen", "free parking"],
+      images: ["/images/sample-sandton.jpg"],
+      rating: 5.0,
+      reviews: 318,
+      host: host.username,
+      hostId: host._id,
+      enhancedCleaning: false,
+      selfCheckIn: false,
+    },
+  ];
+
+  await Accommodation.insertMany(sampleListings);
+
+  console.log("Seed complete.");
+  console.log("Sample user login: john@example.com / password123 (role: user)");
+  console.log("Sample host login: jane@example.com / password321 (role: host)");
+  process.exit();
+};
+
+runSeed().catch((error) => {
+  console.error("Seeding failed:", error);
+  process.exit(1);
+});
