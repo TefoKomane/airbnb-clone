@@ -1,0 +1,37 @@
+.admin-header {
+  border-bottom: 1px solid var(--color-border);
+  background-color: #fff;
+}
+
+.admin-header__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+}
+
+.admin-header__logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.admin-header__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-header__greeting {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin-header__become-host {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin-header__profile {
+  position: relative;
+}
