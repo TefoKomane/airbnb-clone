@@ -63,3 +63,32 @@ export default function ViewReservations() {
                 <th>Booked by</th>
                 <th>Property</th>
                 <th>Checkin</th>
+                <th>Checkout</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reservations.map((reservation) => (
+                <tr key={reservation._id}>
+                  <td>{reservation.guest?.username || "Guest"}</td>
+                  <td>{reservation.accommodation?.title || "Listing removed"}</td>
+                  <td>{formatDate(reservation.checkIn)}</td>
+                  <td>{formatDate(reservation.checkOut)}</td>
+                  <td>
+                    <button
+                      className="btn btn-primary reservations-table__delete"
+                      onClick={() => handleDelete(reservation._id)}
+                      disabled={deletingId === reservation._id}
+                    >
+                      {deletingId === reservation._id ? "Deleting..." : "Delete"}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </main>
+  );
+}
