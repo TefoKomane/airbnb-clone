@@ -56,3 +56,28 @@ export default function Header() {
               </div>
             </>
           ) : (
+            <Link to="/login" className="admin-header__become-host">
+              Become a Host
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {admin && (
+        <nav className="admin-header__nav container">
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`admin-header__nav-link ${
+                location.pathname === link.to ? "admin-header__nav-link--active" : ""
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+      )}
+    </header>
+  );
+}
