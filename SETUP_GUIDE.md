@@ -67,3 +67,73 @@ Think of it like three separate restaurants that all happen to order ingredients
 ---
 
 ## 3. Set up the backend first
+
+Open the `airbnb-clone` folder in VS Code (File > Open Folder). Then open the built in terminal (Terminal > New Terminal).
+
+```
+cd server
+npm install
+```
+
+This downloads every package listed in `server/package.json` into a `server/node_modules` folder. It can take a minute or two the first time.
+
+Next, create your real environment file:
+
+```
+cp .env.example .env
+```
+
+On Windows, if `cp` does not work in your terminal, just duplicate the file manually in VS Code's file explorer and rename the copy to `.env`.
+
+Open `.env` and fill in:
+* `MONGO_URI` — your real connection string from MongoDB Atlas (see `API_SECURITY.md`)
+* `JWT_SECRET` — a long random string (see `API_SECURITY.md` for how to generate one safely)
+* Leave `PORT`, `JWT_EXPIRES_IN`, `CLIENT_URL` and `ADMIN_URL` as they are unless you have a specific reason to change them
+
+**Never commit your real `.env` file.** The `.gitignore` in `server/` already excludes it, so as long as you do not manually force-add it, you are safe.
+
+Now seed the database with two starter accounts and a few sample listings:
+
+```
+npm run seed
+```
+
+You should see output ending in something like:
+```
+Seed complete.
+Sample user login: john@example.com / password123 (role: user)
+Sample host login: jane@example.com / password321 (role: host)
+```
+
+If instead you see a connection error, stop here and re-check your `MONGO_URI` value against `API_SECURITY.md` before continuing — nothing else in this project will work until the database connects.
+
+Now start the backend:
+
+```
+npm run dev
+```
+
+You should see `MongoDB connected: ...` followed by `Server running on port 5000`. Leave this terminal running. Open `http://localhost:5000` in a browser — you should see a small JSON message confirming the API is running.
+
+---
+
+## 4. Set up the client (guest site)
+
+Open a **second** terminal in VS Code (click the `+` icon in the terminal panel, or use Terminal > New Terminal again — do not close the one running your server).
+
+```
+cd client
+npm install
+cp .env.example .env
+npm run dev
+```
+
+The default `.env` value already points at `http://localhost:5000/api`, so you should not need to change anything unless your backend is running somewhere else.
+
+Vite will print a local URL, normally `http://localhost:5173`. Open that in your browser. You should see the home page with the hero banner, inspiration cards, and the rest of the sections.
+
+Try logging in with `john@example.com` / `password123` from the header, then search for a location like "New York" or "Bordeaux" to see listings pulled live from your database.
+
+---
+
+## 5. Set up the admin dashboard
