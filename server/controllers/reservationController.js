@@ -83,3 +83,40 @@ const getReservationsByUser = async (req, res, next) => {
     res.json(reservations);
   } catch (error) {
     next(error);
+  }
+};
+
+// @desc    Delete a reservation
+// @route   DELETE /api/reservations/:id
+// @access  Private (the guest who booked it, or the host who owns the listing)
+const deleteReservation = async (req, res, next) => {
+  try {
+    const reservation = await Reservation.findById(req.params.id);
+
+    if (!reservation) {
+      res.status(404);
+      throw new Error("Reservation not found");
+    }
+
+    const isGuest = reservation.guest.toString() === req.user._id.toString();
+    const isHostOfListing =
+      reservation.host.toString() === req.user._id.toString();
+
+    if (!isGuest && !isHostOfListing) {
+      res.status(403);
+      throw new Error("You are not allowed to cancel this reservation");
+    }
+
+    await reservation.deleteOne();
+    res.json({ message: "Reservation removed", id: req.params.id });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  createReservation,
+  getReservationsByHost,
+  getReservationsByUser,
+  deleteReservation,
+};
