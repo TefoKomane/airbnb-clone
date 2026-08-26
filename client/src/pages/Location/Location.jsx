@@ -26,3 +26,31 @@ export default function Location() {
       } catch (err) {
         setError("Could not load listings right now. Please try again shortly.");
       } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAccommodations();
+  }, [searchParams]);
+
+  const handleFilterSubmit = (event) => {
+    event.preventDefault();
+    setSearchParams(locationInput ? { location: locationInput } : {});
+  };
+
+  const activeLocation = searchParams.get("location");
+
+  return (
+    <main className="container location-page">
+      <form className="location-filter" onSubmit={handleFilterSubmit}>
+        <label htmlFor="locationFilter">Location</label>
+        <input
+          id="locationFilter"
+          type="text"
+          placeholder="Search by location, e.g. New York"
+          value={locationInput}
+          onChange={(e) => setLocationInput(e.target.value)}
+        />
+        <button type="submit" className="btn btn-primary">
+          Search
+        </button>
