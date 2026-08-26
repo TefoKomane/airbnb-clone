@@ -74,3 +74,36 @@ const accommodationSchema = new mongoose.Schema(
       max: 5,
     },
     reviews: {
+      type: Number,
+      default: 0,
+    },
+    host: {
+      type: String,
+      required: true,
+    },
+    hostId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    enhancedCleaning: {
+      type: Boolean,
+      default: false,
+    },
+    selfCheckIn: {
+      type: Boolean,
+      default: false,
+    },
+    specificRatings: {
+      cleanliness: { type: Number, default: 4.5 },
+      communication: { type: Number, default: 4.5 },
+      checkIn: { type: Number, default: 4.5 },
+      accuracy: { type: Number, default: 4.5 },
+      location: { type: Number, default: 4.5 },
+      value: { type: Number, default: 4.5 },
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Accommodation", accommodationSchema);
