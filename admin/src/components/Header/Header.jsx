@@ -27,3 +27,32 @@ export default function Header() {
     <header className="admin-header">
       <div className="admin-header__top container">
         <Link to={admin ? "/listings" : "/login"} className="admin-header__logo">
+          airbnb
+        </Link>
+
+        <div className="admin-header__right">
+          {admin ? (
+            <>
+              <span className="admin-header__greeting">{admin.username}</span>
+              <div className="admin-header__profile">
+                <button
+                  className="admin-header__profile-btn"
+                  onClick={() => setMenuOpen((open) => !open)}
+                  aria-haspopup="true"
+                  aria-expanded={menuOpen}
+                >
+                  <span className="admin-header__avatar">
+                    {admin.username.charAt(0).toUpperCase()}
+                  </span>
+                </button>
+                {menuOpen && (
+                  <div className="admin-header__dropdown">
+                    <Link to="/reservations" onClick={() => setMenuOpen(false)}>
+                      View reservations
+                    </Link>
+                    <button onClick={handleLogout}>Log out</button>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
