@@ -29,3 +29,35 @@ export default function Login() {
       setError(validationError);
       return;
     }
+
+    setError("");
+    setSubmitting(true);
+    try {
+      await login(email, password);
+      navigate("/listings");
+    } catch (err) {
+      setError(
+        err.response?.data?.message || err.message || "Could not log in. Please try again."
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <main className="admin-login-page">
+      <div className="admin-login-card">
+        <h1>Admin Log in</h1>
+        <p className="admin-login-card__hint">
+          Only host accounts can access this dashboard.
+        </p>
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
