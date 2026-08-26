@@ -91,3 +91,97 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
         </div>
 
         <div className="form-group">
+          <label htmlFor="type">Property type</label>
+          <select id="type" name="type" value={values.type} onChange={handleChange}>
+            <option value="">Select a type</option>
+            <option value="Entire home">Entire home</option>
+            <option value="Entire apartment">Entire apartment</option>
+            <option value="Entire rental unit">Entire rental unit</option>
+            <option value="Private room">Private room</option>
+            <option value="Shared room">Shared room</option>
+          </select>
+          {errors.type && <p className="form-error">{errors.type}</p>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="location">Location</label>
+          <input id="location" name="location" value={values.location} onChange={handleChange} />
+          {errors.location && <p className="form-error">{errors.location}</p>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="price">Price per night ($)</label>
+          <input
+            id="price"
+            name="price"
+            type="number"
+            min="0"
+            value={values.price}
+            onChange={handleChange}
+          />
+          {errors.price && <p className="form-error">{errors.price}</p>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="guests">Guests</label>
+          <input
+            id="guests"
+            name="guests"
+            type="number"
+            min="1"
+            value={values.guests}
+            onChange={handleChange}
+          />
+          {errors.guests && <p className="form-error">{errors.guests}</p>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="bedrooms">Bedrooms</label>
+          <input
+            id="bedrooms"
+            name="bedrooms"
+            type="number"
+            min="0"
+            value={values.bedrooms}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="bathrooms">Bathrooms</label>
+          <input
+            id="bathrooms"
+            name="bathrooms"
+            type="number"
+            min="0"
+            value={values.bathrooms}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="weeklyDiscount">Weekly discount ($)</label>
+          <input
+            id="weeklyDiscount"
+            name="weeklyDiscount"
+            type="number"
+            min="0"
+            value={values.weeklyDiscount}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="cleaningFee">Cleaning fee ($)</label>
+          <input
+            id="cleaningFee"
+            name="cleaningFee"
+            type="number"
+            min="0"
+            value={values.cleaningFee}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="serviceFee">Service fee ($)</label>
