@@ -61,3 +61,31 @@ export default function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          {error && <p className="form-error">{error}</p>}
+
+          <button type="submit" className="btn btn-primary admin-login-card__submit" disabled={submitting}>
+            {submitting ? "Logging in..." : "Log in"}
+          </button>
+        </form>
+
+        <p className="admin-login-card__sample">
+          Sample host login: jane@example.com / password321
+        </p>
+      </div>
+    </main>
+  );
+}
