@@ -39,3 +39,45 @@ export default function Login() {
 
     setError("");
     setSubmitting(true);
+    try {
+      if (mode === "login") {
+        await login(email, password);
+      } else {
+        await register(username, email, password);
+      }
+      navigate("/");
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <main className="login-page">
+      <div className="login-card">
+        <h1>{mode === "login" ? "Log in" : "Sign up"}</h1>
+
+        <form onSubmit={handleSubmit}>
+          {mode === "signup" && (
+            <div className="form-group">
+              <label htmlFor="username">Name</label>
+              <input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+          )}
+
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
