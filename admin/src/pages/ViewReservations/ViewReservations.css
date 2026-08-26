@@ -1,0 +1,31 @@
+.view-reservations-page {
+  padding-bottom: 60px;
+}
+
+.reservations-table-wrap {
+  overflow-x: auto;
+}
+
+.reservations-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reservations-table th {
+  text-align: left;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 16px;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.reservations-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14px;
+}
+
+.reservations-table__delete {
+  padding: 8px 18px;
+  font-size: 13px;
+}
