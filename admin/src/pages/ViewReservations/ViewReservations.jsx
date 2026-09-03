@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../../api/axios.js";
+import { formatCurrency } from "../../utils/currency.js";
 import "./ViewReservations.css";
 
 // shows every reservation made across all listings owned by the logged in host
@@ -64,6 +65,7 @@ export default function ViewReservations() {
                 <th>Property</th>
                 <th>Checkin</th>
                 <th>Checkout</th>
+                <th>Total</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -74,6 +76,7 @@ export default function ViewReservations() {
                   <td>{reservation.accommodation?.title || "Listing removed"}</td>
                   <td>{formatDate(reservation.checkIn)}</td>
                   <td>{formatDate(reservation.checkOut)}</td>
+                  <td>{formatCurrency(reservation.totalPrice)}</td>
                   <td>
                     <button
                       className="btn btn-primary reservations-table__delete"

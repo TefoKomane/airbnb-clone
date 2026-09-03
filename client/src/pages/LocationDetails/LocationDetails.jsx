@@ -18,6 +18,8 @@ const resolveImage = (path) => {
   return path;
 };
 
+const fallbackImage = "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80";
+
 export default function LocationDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -137,7 +139,13 @@ export default function LocationDetails() {
         {/* Image gallery: large image left, four smaller images stacked 2 over 2 */}
         <div className="listing-gallery">
           <div className="listing-gallery__main">
-            <img src={resolveImage(mainImage)} alt={`Main photo of ${listing.title}`} />
+            <img
+              src={resolveImage(mainImage)}
+              alt={`Main photo of ${listing.title}`}
+              onError={(event) => {
+                event.currentTarget.src = fallbackImage;
+              }}
+            />
           </div>
           <div className="listing-gallery__grid">
             {smallImages.slice(0, 4).map((img, index) => (
@@ -145,6 +153,9 @@ export default function LocationDetails() {
                 key={index}
                 src={resolveImage(img)}
                 alt={`Photo ${index + 2} of ${listing.title}`}
+                onError={(event) => {
+                  event.currentTarget.src = fallbackImage;
+                }}
               />
             ))}
           </div>

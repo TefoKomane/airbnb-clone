@@ -35,7 +35,13 @@ export default function LocationCard({ accommodation }) {
   return (
     <article className="location-card" onClick={() => navigate(`/listing/${_id}`)}>
       <div className="location-card__image-wrap">
-        <img src={image} alt={`Photo of ${title}`} />
+        <img
+          src={image}
+          alt={`Photo of ${title}`}
+          onError={(event) => {
+            event.currentTarget.src = "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80";
+          }}
+        />
       </div>
 
       <div className="location-card__body">

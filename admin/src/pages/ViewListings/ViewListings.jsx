@@ -76,6 +76,9 @@ export default function ViewListings() {
               src={resolveImage(listing.images && listing.images[0])}
               alt={`Photo of ${listing.title}`}
               className="listing-row__image"
+              onError={(event) => {
+                event.currentTarget.src = "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=400&q=80";
+              }}
             />
 
             <div className="listing-row__body">
