@@ -77,8 +77,13 @@ const getAccommodations = async (req, res, next) => {
 
     if (req.query.location) {
       // case insensitive partial match so "new" also matches "New York"
-      filter.location = { $regex: req.query.location, $options: "i" };
+      const safeLocation = req.query.location.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      filter.location = { $regex: safeLocation, $options: "i" };
     }
+
+    if (req.query.type) filter.type = req.query.type;
+    if (Number(req.query.maxPrice) > 0) filter.price = { $lte: Number(req.query.maxPrice) };
+    if (Number(req.query.guests) > 0) filter.guests = { $gte: Number(req.query.guests) };
 
     const accommodations = await Accommodation.find(filter).sort({
       createdAt: -1,

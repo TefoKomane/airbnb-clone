@@ -5,6 +5,7 @@ import Location from "./pages/Location/Location.jsx";
 import LocationDetails from "./pages/LocationDetails/LocationDetails.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Reservations from "./pages/Reservations/Reservations.jsx";
+import SavedStays from "./pages/SavedStays/SavedStays.jsx";
 
 // the guest facing app has one shared header across every page
 // the footer lives inside the Home page since only the home page rubric
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/listing/:id" element={<LocationDetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reservations" element={<Reservations />} />
+        <Route path="/saved" element={<SavedStays />} />
       </Routes>
     </>
   );

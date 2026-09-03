@@ -6,10 +6,10 @@ const {
   getReservationsByUser,
   deleteReservation,
 } = require("../controllers/reservationController");
-const { protect } = require("../middleware/auth");
+const { protect, isHost } = require("../middleware/auth");
 
 router.post("/", protect, createReservation);
-router.get("/host", protect, getReservationsByHost);
+router.get("/host", protect, isHost, getReservationsByHost);
 router.get("/user", protect, getReservationsByUser);
 router.delete("/:id", protect, deleteReservation);
 

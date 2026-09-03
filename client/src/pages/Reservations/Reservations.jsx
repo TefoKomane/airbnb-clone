@@ -56,6 +56,8 @@ export default function Reservations() {
     return date.toLocaleDateString("en-GB");
   };
 
+  const reservationStatus = (reservation) => new Date(reservation.checkOut) >= new Date() ? "Upcoming" : "Completed";
+
   if (loading) return <p className="page-status">Loading your reservations...</p>;
 
   return (
@@ -78,6 +80,7 @@ export default function Reservations() {
             <thead>
               <tr>
                 <th>Property</th>
+                <th>Status</th>
                 <th>Check in</th>
                 <th>Check out</th>
                 <th>Total</th>
@@ -95,6 +98,7 @@ export default function Reservations() {
                       </span>
                     )}
                   </td>
+                  <td><span className={`reservation-status reservation-status--${reservationStatus(reservation).toLowerCase()}`}>{reservationStatus(reservation)}</span></td>
                   <td>{formatDate(reservation.checkIn)}</td>
                   <td>{formatDate(reservation.checkOut)}</td>
                   <td>{formatCurrency(reservation.totalPrice)}</td>

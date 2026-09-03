@@ -11,6 +11,8 @@ export default function ViewReservations() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [deletingId, setDeletingId] = useState(null);
+  const [propertyFilter, setPropertyFilter] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
   const { logout } = useAuth();
 
   const exportReservations = () => {
@@ -42,7 +44,10 @@ export default function ViewReservations() {
       }
     };
     fetchReservations();
-  }, []);
+  }, [reloadKey]);
+
+  const visibleReservations = reservations.filter((reservation) => !propertyFilter || reservation.accommodation?._id === propertyFilter);
+  const reservationRevenue = reservations.reduce((total, reservation) => total + Number(reservation.totalPrice || 0), 0);
 
   const handleDelete = async (id) => {
     const confirmed = window.confirm("Delete this reservation?");
@@ -67,9 +72,15 @@ export default function ViewReservations() {
     <main className="container view-reservations-page">
       <h1 className="page-heading">My Reservations</h1>
       <div className="reservation-tools">
-        <button className="btn btn-outline" onClick={() => window.location.reload()}>Refresh</button>
+        <button className="btn btn-outline" onClick={() => setReloadKey((key) => key + 1)}>Refresh</button>
         <button className="btn btn-primary" onClick={exportReservations} disabled={reservations.length === 0}>Export CSV</button>
+        <select value={propertyFilter} onChange={(event) => setPropertyFilter(event.target.value)} aria-label="Filter reservations by property">
+          <option value="">All properties</option>
+          {[...new Map(reservations.map((reservation) => [reservation.accommodation?._id, reservation.accommodation?.title])).entries()].filter(([id]) => id).map(([id, title]) => <option key={id} value={id}>{title}</option>)}
+        </select>
       </div>
+
+      <p className="reservation-summary">{reservations.length} booking{reservations.length === 1 ? "" : "s"} · {formatCurrency(reservationRevenue)} booked revenue</p>
 
       {error && <p className="form-error">{error}</p>}
 
@@ -91,7 +102,7 @@ export default function ViewReservations() {
               </tr>
             </thead>
             <tbody>
-              {reservations.map((reservation) => (
+              {visibleReservations.map((reservation) => (
                 <tr key={reservation._id}>
                   <td>{reservation.guest?.username || "Guest"}</td>
                   <td>{reservation.accommodation?.title || "Listing removed"}</td>

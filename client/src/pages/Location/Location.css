@@ -48,6 +48,9 @@
   max-width: 900px;
 }
 
+.location-skeletons { display: grid; gap: 14px; max-width: 900px; }
+.location-skeletons .loading-shimmer { min-height: 150px; }
+
 .location-actions {
   display: flex;
   align-items: center;

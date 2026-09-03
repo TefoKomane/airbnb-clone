@@ -15,7 +15,7 @@ export default function Location() {
   const [type, setType] = useState(initialType);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
   const [guests, setGuests] = useState(initialGuests);
-  const [sortBy, setSortBy] = useState("recommended");
+  const [sortBy, setSortBy] = useState(() => localStorage.getItem("airbnbSort") || "recommended");
   const [savedOnly, setSavedOnly] = useState(searchParams.get("saved") === "true");
   const [compactView, setCompactView] = useState(false);
   const [accommodations, setAccommodations] = useState([]);
@@ -29,19 +29,19 @@ export default function Location() {
       setError("");
       try {
         const currentLocation = searchParams.get("location") || "";
-        const { data } = await api.get("/accommodations", {
-          params: currentLocation ? { location: currentLocation } : {},
-        });
         const currentType = searchParams.get("type") || "";
         const currentMaxPrice = Number(searchParams.get("maxPrice")) || 0;
         const currentGuests = Number(searchParams.get("guests")) || 0;
+        const { data } = await api.get("/accommodations", {
+          params: {
+            ...(currentLocation && { location: currentLocation }),
+            ...(currentType && { type: currentType }),
+            ...(currentMaxPrice && { maxPrice: currentMaxPrice }),
+            ...(currentGuests && { guests: currentGuests }),
+          },
+        });
         const savedListings = JSON.parse(localStorage.getItem("airbnbSavedListings") || "[]");
-        setAccommodations(data.filter((item) =>
-          (!currentType || item.type === currentType) &&
-          (!currentMaxPrice || item.price <= currentMaxPrice) &&
-          (!currentGuests || item.guests >= currentGuests) &&
-          (!searchParams.get("saved") || savedListings.includes(item._id))
-        ));
+        setAccommodations(data.filter((item) => !searchParams.get("saved") || savedListings.includes(item._id)));
       } catch (err) {
         setError("Could not load listings right now. Please try again shortly.");
       } finally {
@@ -60,6 +60,11 @@ export default function Location() {
     if (maxPrice) nextParams.maxPrice = maxPrice;
     if (guests) nextParams.guests = guests;
     setSearchParams(nextParams);
+  };
+
+  const changeSort = (value) => {
+    setSortBy(value);
+    localStorage.setItem("airbnbSort", value);
   };
 
   const activeLocation = searchParams.get("location");
@@ -125,13 +130,13 @@ export default function Location() {
       <h1 className="location-page__heading">
         {loading
           ? "Searching..."
-          : `${accommodations.length}+ stays${activeLocation ? ` in ${activeLocation}` : ""}`}
+          : `${accommodations.length} stays${activeLocation ? ` in ${activeLocation}` : ""}`}
       </h1>
 
       {!loading && accommodations.length > 0 && (
         <label className="location-sort">
           Sort by
-          <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+          <select value={sortBy} onChange={(event) => changeSort(event.target.value)}>
             <option value="recommended">Recommended</option>
             <option value="price-low">Price: low to high</option>
             <option value="price-high">Price: high to low</option>
@@ -149,6 +154,7 @@ export default function Location() {
         </div>
       )}
 
+      {loading && <div className="location-skeletons" aria-label="Loading stays">{[1, 2, 3].map((item) => <div key={item} className="loading-shimmer" />)}</div>}
       <div className={`location-page__list ${compactView ? "location-page__list--compact" : ""}`}>
         {[...accommodations].sort((a, b) => {
           if (sortBy === "price-low") return a.price - b.price;

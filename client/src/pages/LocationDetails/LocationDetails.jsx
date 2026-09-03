@@ -32,6 +32,7 @@ export default function LocationDetails() {
   const [saved, setSaved] = useState(false);
   const [reportMessage, setReportMessage] = useState("");
   const [selectedImage, setSelectedImage] = useState(0);
+  const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -128,6 +129,12 @@ export default function LocationDetails() {
     setCheckIn(start.toISOString().split("T")[0]);
     setCheckOut(end.toISOString().split("T")[0]);
   };
+
+  const bookingHint = !checkIn || !checkOut
+    ? "Choose your dates to see the full price."
+    : nights === 0
+      ? "Checkout must be after check-in."
+      : `${nights} night${nights === 1 ? "" : "s"} selected`;
 
   const toggleSaved = () => {
     const savedListings = JSON.parse(localStorage.getItem("airbnbSavedListings") || "[]");
@@ -342,7 +349,7 @@ export default function LocationDetails() {
                   <input
                     id="checkIn"
                     type="date"
-                    min={new Date().toISOString().split("T")[0]}
+                    min={today}
                     value={checkIn}
                     onChange={(e) => setCheckIn(e.target.value)}
                     required
@@ -353,7 +360,7 @@ export default function LocationDetails() {
                   <input
                     id="checkOut"
                     type="date"
-                    min={checkIn || new Date().toISOString().split("T")[0]}
+                    min={checkIn || today}
                     value={checkOut}
                     onChange={(e) => setCheckOut(e.target.value)}
                     required
@@ -380,6 +387,7 @@ export default function LocationDetails() {
               </button>
 
               <p className="cost-calculator__note">You won&apos;t be charged yet</p>
+              <p className="cost-calculator__hint">{bookingHint}</p>
 
               {bookingError && <p className="form-error">{bookingError}</p>}
               {bookingSuccess && <p className="cost-calculator__success">{bookingSuccess} <Link to="/reservations">View reservations</Link></p>}

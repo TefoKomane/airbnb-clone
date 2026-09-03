@@ -6,11 +6,16 @@ const generateToken = require("../utils/generateToken");
 // @access  Public
 const registerUser = async (req, res, next) => {
   try {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
       res.status(400);
       throw new Error("Please provide a username, email and password");
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      res.status(400);
+      throw new Error("Please provide a valid email address");
     }
 
     const userExists = await User.findOne({ email });
@@ -20,10 +25,10 @@ const registerUser = async (req, res, next) => {
     }
 
     const user = await User.create({
-      username,
-      email,
+      username: username.trim(),
+      email: email.trim().toLowerCase(),
       password,
-      role: role === "host" ? "host" : "user",
+      role: "user",
     });
 
     res.status(201).json({

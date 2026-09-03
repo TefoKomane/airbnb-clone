@@ -24,6 +24,7 @@ export default function ViewListings() {
   const [deletingId, setDeletingId] = useState(null);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("newest");
+  const [reloadKey, setReloadKey] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function ViewListings() {
       }
     };
     fetchListings();
-  }, []);
+  }, [reloadKey]);
 
   const handleDelete = async (id) => {
     const confirmed = window.confirm("Delete this listing? This cannot be undone.");
@@ -85,6 +86,7 @@ export default function ViewListings() {
           <option value="price-low">Price: low to high</option>
           <option value="price-high">Price: high to low</option>
         </select>
+        <button className="btn btn-outline" type="button" onClick={() => setReloadKey((key) => key + 1)}>Refresh</button>
       </div>
 
       {error && <p className="form-error">{error}</p>}
@@ -145,6 +147,9 @@ export default function ViewListings() {
             </div>
           </div>
         ))}
+        {listings.length > 0 && visibleListings.length === 0 && (
+          <p className="page-status">No listings match “{search}”. Clear the search to see your full portfolio.</p>
+        )}
       </div>
     </main>
   );

@@ -10,8 +10,13 @@ import "./LocationCard.css";
 export default function LocationCard({ accommodation }) {
   const navigate = useNavigate();
   const [saved, setSaved] = useState(() => {
-    const savedListings = JSON.parse(localStorage.getItem("airbnbSavedListings") || "[]");
-    return savedListings.includes(accommodation._id);
+    try {
+      const savedListings = JSON.parse(localStorage.getItem("airbnbSavedListings") || "[]");
+      return Array.isArray(savedListings) && savedListings.includes(accommodation._id);
+    } catch {
+      localStorage.removeItem("airbnbSavedListings");
+      return false;
+    }
   });
 
   const {
@@ -69,7 +74,13 @@ export default function LocationCard({ accommodation }) {
             e.stopPropagation();
             setSaved((current) => {
               const next = !current;
-              const savedListings = JSON.parse(localStorage.getItem("airbnbSavedListings") || "[]");
+              let savedListings = [];
+              try {
+                const parsed = JSON.parse(localStorage.getItem("airbnbSavedListings") || "[]");
+                savedListings = Array.isArray(parsed) ? parsed : [];
+              } catch {
+                localStorage.removeItem("airbnbSavedListings");
+              }
               const updated = next
                 ? [...new Set([...savedListings, _id])]
                 : savedListings.filter((id) => id !== _id);

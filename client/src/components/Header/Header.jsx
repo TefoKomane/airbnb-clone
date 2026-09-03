@@ -100,6 +100,9 @@ export default function Header() {
                   <Link to="/reservations" onClick={() => setMenuOpen(false)}>
                     View reservations
                   </Link>
+                  <Link to="/saved" onClick={() => setMenuOpen(false)}>
+                    Saved stays
+                  </Link>
                   <button onClick={handleLogout}>Log out</button>
                 </>
               ) : (

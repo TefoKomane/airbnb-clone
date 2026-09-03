@@ -25,6 +25,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
   const [values, setValues] = useState({ ...emptyValues, ...initialValues });
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const [imageNotice, setImageNotice] = useState("");
   const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
@@ -36,7 +37,10 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
   };
 
   const handleImageChange = (event) => {
-    const selectedImages = Array.from(event.target.files).filter((file) => file.size <= 5 * 1024 * 1024).slice(0, 10);
+    const files = Array.from(event.target.files);
+    const rejectedCount = files.filter((file) => file.size > 5 * 1024 * 1024).length;
+    const selectedImages = files.filter((file) => file.size <= 5 * 1024 * 1024).slice(0, 10);
+    setImageNotice(rejectedCount ? `${rejectedCount} image${rejectedCount === 1 ? "" : "s"} exceeded the 5 MB limit.` : "");
     setImages(selectedImages);
     setPreviews(selectedImages.map((file) => URL.createObjectURL(file)));
   };
@@ -60,6 +64,12 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
     }
     if (!values.guests || Number(values.guests) < 1) {
       newErrors.guests = "Guests must be at least 1.";
+    }
+    ["bedrooms", "bathrooms", "weeklyDiscount", "cleaningFee", "serviceFee", "occupancyTaxes"].forEach((field) => {
+      if (Number(values[field]) < 0) newErrors[field] = "Value cannot be negative.";
+    });
+    if (Number(values.weeklyDiscount) > Number(values.price || 0)) {
+      newErrors.weeklyDiscount = "Discount cannot exceed the nightly price.";
     }
     return newErrors;
   };
@@ -88,6 +98,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
     setValues({ ...emptyValues, ...initialValues });
     setImages([]);
     setPreviews([]);
+    setImageNotice("");
     setErrors({});
   };
 
@@ -269,6 +280,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
         <p className="listing-form__hint">
           Optional. You can upload jpg, png or webp images, up to 5mb each.
         </p>
+        {imageNotice && <p className="form-error">{imageNotice}</p>}
         {previews.length > 0 && (
           <div className="listing-form__previews">
             {previews.map((preview) => <img key={preview} src={preview} alt="Selected listing preview" />)}

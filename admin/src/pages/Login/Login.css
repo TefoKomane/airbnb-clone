@@ -40,3 +40,16 @@
   border-top: 1px solid var(--color-border);
   padding-top: 14px;
 }
+
+.admin-password-toggle {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg-soft);
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-password-toggle:hover { border-color: var(--color-primary); color: var(--color-primary); }
