@@ -7,6 +7,41 @@
   flex-direction: column;
 }
 
+.listing-stats,
+.listing-tools {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.listing-stats > div {
+  flex: 1;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-bg-soft);
+}
+
+.listing-stats strong,
+.listing-stats span {
+  display: block;
+}
+
+.listing-stats strong { font-size: 1.2rem; }
+.listing-stats span { color: var(--color-text-muted); font-size: 12px; margin-top: 4px; }
+
+.listing-tools input,
+.listing-tools select {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.listing-tools input { flex: 1; }
+
 .listing-row {
   display: flex;
   gap: 24px;

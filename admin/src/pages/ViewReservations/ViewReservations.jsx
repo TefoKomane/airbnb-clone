@@ -13,6 +13,16 @@ export default function ViewReservations() {
   const [deletingId, setDeletingId] = useState(null);
   const { logout } = useAuth();
 
+  const exportReservations = () => {
+    const rows = [["Guest", "Property", "Check in", "Check out", "Total"], ...reservations.map((reservation) => [reservation.guest?.username || "Guest", reservation.accommodation?.title || "Listing removed", reservation.checkIn, reservation.checkOut, reservation.totalPrice])];
+    const csv = rows.map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(",")).join("\n");
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+    link.download = "airbnb-reservations.csv";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   useEffect(() => {
     const fetchReservations = async () => {
       setLoading(true);
@@ -56,6 +66,10 @@ export default function ViewReservations() {
   return (
     <main className="container view-reservations-page">
       <h1 className="page-heading">My Reservations</h1>
+      <div className="reservation-tools">
+        <button className="btn btn-outline" onClick={() => window.location.reload()}>Refresh</button>
+        <button className="btn btn-primary" onClick={exportReservations} disabled={reservations.length === 0}>Export CSV</button>
+      </div>
 
       {error && <p className="form-error">{error}</p>}
 

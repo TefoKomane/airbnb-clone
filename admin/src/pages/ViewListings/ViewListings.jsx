@@ -22,6 +22,8 @@ export default function ViewListings() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [deletingId, setDeletingId] = useState(null);
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("newest");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,9 +59,33 @@ export default function ViewListings() {
 
   if (loading) return <p className="page-status">Loading your listings...</p>;
 
+  const visibleListings = listings
+    .filter((listing) => `${listing.title} ${listing.location}`.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => {
+      if (sortBy === "price-low") return a.price - b.price;
+      if (sortBy === "price-high") return b.price - a.price;
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+  const portfolioValue = listings.reduce((total, listing) => total + Number(listing.price || 0), 0);
+
   return (
     <main className="container view-listings-page">
       <h1 className="page-heading">My Hotel List</h1>
+
+      <div className="listing-stats">
+        <div><strong>{listings.length}</strong><span>Active listings</span></div>
+        <div><strong>{listings.reduce((total, listing) => total + Number(listing.guests || 0), 0)}</strong><span>Total guest capacity</span></div>
+        <div><strong>{formatCurrency(portfolioValue)}</strong><span>Combined nightly rate</span></div>
+      </div>
+
+      <div className="listing-tools">
+        <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search your listings" aria-label="Search your listings" />
+        <select value={sortBy} onChange={(event) => setSortBy(event.target.value)} aria-label="Sort listings">
+          <option value="newest">Newest first</option>
+          <option value="price-low">Price: low to high</option>
+          <option value="price-high">Price: high to low</option>
+        </select>
+      </div>
 
       {error && <p className="form-error">{error}</p>}
 
@@ -70,7 +96,7 @@ export default function ViewListings() {
       )}
 
       <div className="listings-list">
-        {listings.map((listing) => (
+        {visibleListings.map((listing) => (
           <div key={listing._id} className="listing-row">
             <img
               src={resolveImage(listing.images && listing.images[0])}

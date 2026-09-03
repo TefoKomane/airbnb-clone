@@ -24,6 +24,7 @@ const emptyValues = {
 export default function ListingForm({ initialValues, onSubmit, submitting, submitLabel }) {
   const [values, setValues] = useState({ ...emptyValues, ...initialValues });
   const [images, setImages] = useState([]);
+  const [previews, setPreviews] = useState([]);
   const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
@@ -35,7 +36,9 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
   };
 
   const handleImageChange = (event) => {
-    setImages(Array.from(event.target.files));
+    const selectedImages = Array.from(event.target.files).slice(0, 10);
+    setImages(selectedImages);
+    setPreviews(selectedImages.map((file) => URL.createObjectURL(file)));
   };
 
   const validate = () => {
@@ -217,6 +220,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
           value={values.description}
           onChange={handleChange}
         />
+        <p className="listing-form__hint">{values.description.length}/500 characters</p>
         {errors.description && <p className="form-error">{errors.description}</p>}
       </div>
 
@@ -258,6 +262,11 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
         <p className="listing-form__hint">
           Optional. You can upload jpg, png or webp images, up to 5mb each.
         </p>
+        {previews.length > 0 && (
+          <div className="listing-form__previews">
+            {previews.map((preview) => <img key={preview} src={preview} alt="Selected listing preview" />)}
+          </div>
+        )}
       </div>
 
       <button type="submit" className="btn btn-primary listing-form__submit" disabled={submitting}>
