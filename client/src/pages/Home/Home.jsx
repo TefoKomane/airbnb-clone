@@ -110,9 +110,8 @@ export default function Home() {
             ))}
           </div>
 
-          {activeTab === 0 ? (
-            <ul className="getaway-list">
-              {futureGetaways.places.map((place) => (
+          <ul className="getaway-list">
+              {futureGetaways.destinations[activeTab].map((place) => (
                 <li key={place.city}>
                   <button onClick={() => goToSearch(place.city)}>
                     <span className="getaway-list__city">{place.city}</span>
@@ -124,11 +123,6 @@ export default function Home() {
                 <button className="getaway-list__more">Show more</button>
               </li>
             </ul>
-          ) : (
-            <p className="getaway-placeholder">
-              More destinations for this category are coming soon.
-            </p>
-          )}
         </section>
       </div>
 
