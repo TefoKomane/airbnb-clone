@@ -27,6 +27,7 @@ export default function LocationDetails() {
   const [bookingError, setBookingError] = useState("");
   const [bookingSuccess, setBookingSuccess] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [shareMessage, setShareMessage] = useState("");
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -107,6 +108,15 @@ export default function LocationDetails() {
     }
   };
 
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setShareMessage("Link copied");
+    } catch {
+      setShareMessage("Copy this page URL to share it");
+    }
+  };
+
   if (loading) return <p className="page-status">Loading listing...</p>;
   if (error) return <p className="page-status">{error}</p>;
   if (!listing) return null;
@@ -120,6 +130,8 @@ export default function LocationDetails() {
         {/* Heading and subheading */}
         <div className="listing-page__heading">
           <h1>{listing.title}</h1>
+          <button className="listing-share" onClick={handleShare}>Share</button>
+          {shareMessage && <span className="listing-share__message">{shareMessage}</span>}
           <p className="listing-page__subheading">
             <Icon name="star" size={14} color="#FF385C" filled /> {listing.rating.toFixed(1)}{" "}
             <span className="dot">&middot;</span>
@@ -306,6 +318,7 @@ export default function LocationDetails() {
                   <input
                     id="checkIn"
                     type="date"
+                    min={new Date().toISOString().split("T")[0]}
                     value={checkIn}
                     onChange={(e) => setCheckIn(e.target.value)}
                     required
@@ -316,6 +329,7 @@ export default function LocationDetails() {
                   <input
                     id="checkOut"
                     type="date"
+                    min={checkIn || new Date().toISOString().split("T")[0]}
                     value={checkOut}
                     onChange={(e) => setCheckOut(e.target.value)}
                     required

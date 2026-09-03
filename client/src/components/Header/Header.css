@@ -26,6 +26,7 @@
 }
 
 .site-header__search {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -35,6 +36,29 @@
   box-shadow: var(--shadow-card);
   flex: 1;
   max-width: 420px;
+}
+
+.site-header__recent-searches {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.site-header__recent-searches button {
+  padding: 10px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  text-align: left;
 }
 
 .site-header__search input {

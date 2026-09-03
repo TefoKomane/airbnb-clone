@@ -9,7 +9,10 @@ import "./LocationCard.css";
 // image on the left, details on the right, matching the reviewed design
 export default function LocationCard({ accommodation }) {
   const navigate = useNavigate();
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(() => {
+    const savedListings = JSON.parse(localStorage.getItem("airbnbSavedListings") || "[]");
+    return savedListings.includes(accommodation._id);
+  });
 
   const {
     _id,
@@ -63,7 +66,15 @@ export default function LocationCard({ accommodation }) {
           className="location-card__heart"
           onClick={(e) => {
             e.stopPropagation();
-            setSaved((s) => !s);
+            setSaved((current) => {
+              const next = !current;
+              const savedListings = JSON.parse(localStorage.getItem("airbnbSavedListings") || "[]");
+              const updated = next
+                ? [...new Set([...savedListings, _id])]
+                : savedListings.filter((id) => id !== _id);
+              localStorage.setItem("airbnbSavedListings", JSON.stringify(updated));
+              return next;
+            });
           }}
           aria-label={saved ? "Remove from saved" : "Save this listing"}
         >

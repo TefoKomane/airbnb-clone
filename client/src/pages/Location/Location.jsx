@@ -15,6 +15,7 @@ export default function Location() {
   const [type, setType] = useState(initialType);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
   const [guests, setGuests] = useState(initialGuests);
+  const [sortBy, setSortBy] = useState("recommended");
   const [accommodations, setAccommodations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -103,6 +104,18 @@ export default function Location() {
           : `${accommodations.length}+ stays${activeLocation ? ` in ${activeLocation}` : ""}`}
       </h1>
 
+      {!loading && accommodations.length > 0 && (
+        <label className="location-sort">
+          Sort by
+          <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+            <option value="recommended">Recommended</option>
+            <option value="price-low">Price: low to high</option>
+            <option value="price-high">Price: high to low</option>
+            <option value="rating">Top rated</option>
+          </select>
+        </label>
+      )}
+
       {error && <p className="form-error">{error}</p>}
 
       {!loading && accommodations.length === 0 && !error && (
@@ -112,7 +125,12 @@ export default function Location() {
       )}
 
       <div className="location-page__list">
-        {accommodations.map((item) => (
+        {[...accommodations].sort((a, b) => {
+          if (sortBy === "price-low") return a.price - b.price;
+          if (sortBy === "price-high") return b.price - a.price;
+          if (sortBy === "rating") return b.rating - a.rating;
+          return 0;
+        }).map((item) => (
           <LocationCard key={item._id} accommodation={item} />
         ))}
       </div>

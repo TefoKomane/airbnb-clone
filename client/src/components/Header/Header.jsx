@@ -9,6 +9,7 @@ import "./Header.css";
 export default function Header() {
   const [searchValue, setSearchValue] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [recentSearches, setRecentSearches] = useState(() => JSON.parse(localStorage.getItem("airbnbRecentSearches") || "[]"));
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("airbnbTheme") === "dark");
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -20,6 +21,11 @@ export default function Header() {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
+    if (searchValue.trim()) {
+      const updated = [searchValue.trim(), ...recentSearches.filter((item) => item.toLowerCase() !== searchValue.trim().toLowerCase())].slice(0, 5);
+      localStorage.setItem("airbnbRecentSearches", JSON.stringify(updated));
+      setRecentSearches(updated);
+    }
     navigate(`/search?location=${encodeURIComponent(searchValue)}`);
   };
 
@@ -46,6 +52,15 @@ export default function Header() {
             onChange={(e) => setSearchValue(e.target.value)}
             aria-label="Search destinations"
           />
+          {recentSearches.length > 0 && searchValue.length === 0 && (
+            <div className="site-header__recent-searches">
+              {recentSearches.slice(0, 3).map((search) => (
+                <button key={search} type="button" onClick={() => navigate(`/search?location=${encodeURIComponent(search)}`)}>
+                  Recent: {search}
+                </button>
+              ))}
+            </div>
+          )}
           <button type="submit" className="site-header__search-btn" aria-label="Search">
             <Icon name="search" size={14} color="#fff" />
           </button>
