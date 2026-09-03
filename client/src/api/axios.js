@@ -9,9 +9,13 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const storedUser = localStorage.getItem("airbnbUser");
   if (storedUser) {
-    const { token } = JSON.parse(storedUser);
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    try {
+      const { token } = JSON.parse(storedUser);
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch {
+      localStorage.removeItem("airbnbUser");
     }
   }
   return config;

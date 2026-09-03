@@ -6,7 +6,7 @@ const Accommodation = require("../models/Accommodation");
 // @access  Private
 const createReservation = async (req, res, next) => {
   try {
-    const { accommodationId, checkIn, checkOut, guests, totalPrice } =
+    const { accommodationId, checkIn, checkOut, guests } =
       req.body;
 
     if (!accommodationId || !checkIn || !checkOut || !guests) {
@@ -22,17 +22,50 @@ const createReservation = async (req, res, next) => {
       throw new Error("Accommodation not found");
     }
 
-    if (new Date(checkOut) <= new Date(checkIn)) {
+    const startDate = new Date(checkIn);
+    const endDate = new Date(checkOut);
+
+    if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
+      res.status(400);
+      throw new Error("Check in and check out must be valid dates");
+    }
+
+    if (endDate <= startDate) {
       res.status(400);
       throw new Error("Check out date must be after the check in date");
     }
 
-    if (guests > accommodation.guests) {
+    if (startDate < new Date(new Date().setHours(0, 0, 0, 0))) {
+      res.status(400);
+      throw new Error("Check in date cannot be in the past");
+    }
+
+    if (Number(guests) < 1 || Number(guests) > accommodation.guests) {
       res.status(400);
       throw new Error(
         `This listing only allows up to ${accommodation.guests} guests`
       );
     }
+
+    const overlappingReservation = await Reservation.findOne({
+      accommodation: accommodationId,
+      checkIn: { $lt: endDate },
+      checkOut: { $gt: startDate },
+    });
+
+    if (overlappingReservation) {
+      res.status(409);
+      throw new Error("This listing is already reserved for those dates");
+    }
+
+    const nights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+    const weeklyDiscount = nights >= 7 ? accommodation.weeklyDiscount : 0;
+    const calculatedTotal =
+      accommodation.price * nights -
+      weeklyDiscount +
+      accommodation.cleaningFee +
+      accommodation.serviceFee +
+      accommodation.occupancyTaxes;
 
     const reservation = await Reservation.create({
       accommodation: accommodationId,
@@ -40,8 +73,8 @@ const createReservation = async (req, res, next) => {
       host: accommodation.hostId,
       checkIn,
       checkOut,
-      guests,
-      totalPrice,
+      guests: Number(guests),
+      totalPrice: calculatedTotal,
     });
 
     const populated = await reservation.populate([

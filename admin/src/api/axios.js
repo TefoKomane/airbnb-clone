@@ -9,9 +9,13 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const storedAdmin = localStorage.getItem("airbnbAdmin");
   if (storedAdmin) {
-    const { token } = JSON.parse(storedAdmin);
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    try {
+      const { token } = JSON.parse(storedAdmin);
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch {
+      localStorage.removeItem("airbnbAdmin");
     }
   }
   return config;
