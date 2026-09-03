@@ -658,6 +658,8 @@ Do not commit `.env` files, database credentials, JWT secrets, or private deploy
 
 ## Author
 
-Tefo Karabo Komane  
-Full Stack Web Developer  
+Tefo Karabo Komane
+
+Full Stack Web Developer
+
 Johannesburg, South Africa
