@@ -110,7 +110,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
         </div>
 
         <div className="form-group">
-          <label htmlFor="price">Price per night ($)</label>
+          <label htmlFor="price">Price per night (ZAR)</label>
           <input
             id="price"
             name="price"
@@ -160,7 +160,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
         </div>
 
         <div className="form-group">
-          <label htmlFor="weeklyDiscount">Weekly discount ($)</label>
+          <label htmlFor="weeklyDiscount">Weekly discount (ZAR)</label>
           <input
             id="weeklyDiscount"
             name="weeklyDiscount"
@@ -172,7 +172,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
         </div>
 
         <div className="form-group">
-          <label htmlFor="cleaningFee">Cleaning fee ($)</label>
+          <label htmlFor="cleaningFee">Cleaning fee (ZAR)</label>
           <input
             id="cleaningFee"
             name="cleaningFee"
@@ -184,7 +184,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
         </div>
 
         <div className="form-group">
-          <label htmlFor="serviceFee">Service fee ($)</label>
+          <label htmlFor="serviceFee">Service fee (ZAR)</label>
           <input
             id="serviceFee"
             name="serviceFee"
@@ -196,7 +196,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
         </div>
 
         <div className="form-group">
-          <label htmlFor="occupancyTaxes">Occupancy taxes and fees ($)</label>
+          <label htmlFor="occupancyTaxes">Occupancy taxes and fees (ZAR)</label>
           <input
             id="occupancyTaxes"
             name="occupancyTaxes"

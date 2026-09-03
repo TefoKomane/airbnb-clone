@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axios.js";
 import "./ViewListings.css";
+import { formatCurrency } from "../../utils/currency.js";
 
 // resolves an image path the same way the client app does, so uploaded
 // files and plain external URLs both render correctly
@@ -10,7 +11,8 @@ const resolveImage = (path) => {
     return "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=400&q=80";
   }
   if (path.startsWith("/uploads")) {
-    return `${import.meta.env.VITE_API_URL.replace("/api", "")}${path}`;
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+    return `${apiUrl.replace(/\/api\/?$/, "")}${path}`;
   }
   return path;
 };
@@ -96,7 +98,7 @@ export default function ViewListings() {
 
             <div className="listing-row__side">
               <p className="listing-row__price">
-                ${listing.price} <span>/night</span>
+                {formatCurrency(listing.price)} <span>/night</span>
               </p>
               <button
                 className="btn btn-update listing-row__btn"

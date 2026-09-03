@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/axios.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import Icon from "../../components/Icon/Icon.jsx";
+import { formatCurrency } from "../../utils/currency.js";
 import "./Reservations.css";
 
 // shows every reservation the logged in guest has made
@@ -95,7 +96,7 @@ export default function Reservations() {
                   </td>
                   <td>{formatDate(reservation.checkIn)}</td>
                   <td>{formatDate(reservation.checkOut)}</td>
-                  <td>${reservation.totalPrice}</td>
+                  <td>{formatCurrency(reservation.totalPrice)}</td>
                   <td>
                     <button
                       className="btn btn-outline reservations-table__cancel"

@@ -4,6 +4,7 @@ import api from "../../api/axios.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import Icon from "../../components/Icon/Icon.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
+import { formatCurrency } from "../../utils/currency.js";
 import "./LocationDetails.css";
 
 // turns a raw image path into something the browser can actually load,
@@ -287,7 +288,7 @@ export default function LocationDetails() {
           <aside className="cost-calculator">
             <div className="cost-calculator__header">
               <p className="cost-calculator__price">
-                ${listing.price} <span>/ night</span>
+                {formatCurrency(listing.price)} <span>/ night</span>
               </p>
               <p className="cost-calculator__rating">
                 <Icon name="star" size={14} color="#FF385C" filled /> {listing.rating.toFixed(1)}{" "}
@@ -347,32 +348,32 @@ export default function LocationDetails() {
                 <div className="cost-calculator__breakdown">
                   <div className="cost-row">
                     <span>
-                      ${listing.price} &times; {nights} night{nights !== 1 ? "s" : ""}
+                      {formatCurrency(listing.price)} &times; {nights} night{nights !== 1 ? "s" : ""}
                     </span>
-                    <span>${costBreakdown.subtotal}</span>
+                    <span>{formatCurrency(costBreakdown.subtotal)}</span>
                   </div>
                   {costBreakdown.weeklyDiscount > 0 && (
                     <div className="cost-row cost-row--discount">
                       <span>Weekly discount</span>
-                      <span>-${costBreakdown.weeklyDiscount}</span>
+                      <span>-{formatCurrency(costBreakdown.weeklyDiscount)}</span>
                     </div>
                   )}
                   <div className="cost-row">
                     <span>Cleaning fee</span>
-                    <span>${costBreakdown.cleaningFee}</span>
+                    <span>{formatCurrency(costBreakdown.cleaningFee)}</span>
                   </div>
                   <div className="cost-row">
                     <span>Service fee</span>
-                    <span>${costBreakdown.serviceFee}</span>
+                    <span>{formatCurrency(costBreakdown.serviceFee)}</span>
                   </div>
                   <div className="cost-row">
                     <span>Occupancy taxes and fees</span>
-                    <span>${costBreakdown.occupancyTaxes}</span>
+                    <span>{formatCurrency(costBreakdown.occupancyTaxes)}</span>
                   </div>
                   <hr />
                   <div className="cost-row cost-row--total">
                     <span>Total</span>
-                    <span>${costBreakdown.total}</span>
+                    <span>{formatCurrency(costBreakdown.total)}</span>
                   </div>
                 </div>
               )}

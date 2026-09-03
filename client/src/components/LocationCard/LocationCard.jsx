@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Icon from "../Icon/Icon.jsx";
+import { formatCurrency } from "../../utils/currency.js";
 import "./LocationCard.css";
 
 // used on the Location (search results) page
@@ -27,7 +28,7 @@ export default function LocationCard({ accommodation }) {
   const image =
     images && images.length > 0
       ? images[0].startsWith("/uploads")
-        ? `${import.meta.env.VITE_API_URL.replace("/api", "")}${images[0]}`
+        ? `${(import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/api\/?$/, "")}${images[0]}`
         : images[0]
       : "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80";
 
@@ -67,7 +68,7 @@ export default function LocationCard({ accommodation }) {
           <Icon name="heart" size={20} color={saved ? "#FF385C" : "#222"} filled={saved} />
         </button>
         <p className="location-card__price">
-          ${price} <span>/night</span>
+          {formatCurrency(price)} <span>/night</span>
         </p>
       </div>
     </article>

@@ -68,7 +68,7 @@ export default function Footer() {
         <p>&copy; {new Date().getFullYear()} Airbnb Clone, Inc. &middot; Privacy &middot; Terms &middot; Sitemap</p>
         <div className="site-footer__meta">
           <span>English (US)</span>
-          <span>$ USD</span>
+          <span>R ZAR</span>
           <Icon name="search" size={16} />
         </div>
       </div>
