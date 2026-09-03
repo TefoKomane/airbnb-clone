@@ -36,7 +36,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
   };
 
   const handleImageChange = (event) => {
-    const selectedImages = Array.from(event.target.files).slice(0, 10);
+    const selectedImages = Array.from(event.target.files).filter((file) => file.size <= 5 * 1024 * 1024).slice(0, 10);
     setImages(selectedImages);
     setPreviews(selectedImages.map((file) => URL.createObjectURL(file)));
   };
@@ -82,6 +82,13 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
     });
 
     onSubmit(formData);
+  };
+
+  const resetForm = () => {
+    setValues({ ...emptyValues, ...initialValues });
+    setImages([]);
+    setPreviews([]);
+    setErrors({});
   };
 
   return (
@@ -272,6 +279,7 @@ export default function ListingForm({ initialValues, onSubmit, submitting, submi
       <button type="submit" className="btn btn-primary listing-form__submit" disabled={submitting}>
         {submitting ? "Saving..." : submitLabel}
       </button>
+      <button type="button" className="btn btn-outline" onClick={resetForm} disabled={submitting}>Reset form</button>
     </form>
   );
 }

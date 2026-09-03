@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "../../api/axios.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import Icon from "../../components/Icon/Icon.jsx";
@@ -28,6 +29,8 @@ export default function LocationDetails() {
   const [bookingSuccess, setBookingSuccess] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [shareMessage, setShareMessage] = useState("");
+  const [saved, setSaved] = useState(false);
+  const [reportMessage, setReportMessage] = useState("");
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -117,6 +120,22 @@ export default function LocationDetails() {
     }
   };
 
+  const chooseStayLength = (days) => {
+    const start = new Date();
+    const end = new Date(start);
+    end.setDate(end.getDate() + days);
+    setCheckIn(start.toISOString().split("T")[0]);
+    setCheckOut(end.toISOString().split("T")[0]);
+  };
+
+  const toggleSaved = () => {
+    const savedListings = JSON.parse(localStorage.getItem("airbnbSavedListings") || "[]");
+    const next = !saved;
+    const updated = next ? [...new Set([...savedListings, listing._id])] : savedListings.filter((savedId) => savedId !== listing._id);
+    localStorage.setItem("airbnbSavedListings", JSON.stringify(updated));
+    setSaved(next);
+  };
+
   if (loading) return <p className="page-status">Loading listing...</p>;
   if (error) return <p className="page-status">{error}</p>;
   if (!listing) return null;
@@ -131,6 +150,7 @@ export default function LocationDetails() {
         <div className="listing-page__heading">
           <h1>{listing.title}</h1>
           <button className="listing-share" onClick={handleShare}>Share</button>
+          <button className="listing-share" onClick={toggleSaved}>{saved ? "Saved" : "Save"}</button>
           {shareMessage && <span className="listing-share__message">{shareMessage}</span>}
           <p className="listing-page__subheading">
             <Icon name="star" size={14} color="#FF385C" filled /> {listing.rating.toFixed(1)}{" "}
@@ -337,6 +357,11 @@ export default function LocationDetails() {
                 </div>
               </div>
 
+              <div className="stay-presets">
+                <button type="button" onClick={() => chooseStayLength(2)}>Weekend</button>
+                <button type="button" onClick={() => chooseStayLength(7)}>One week</button>
+              </div>
+
               <div className="form-group">
                 <label htmlFor="guests">GUESTS</label>
                 <select
@@ -359,7 +384,7 @@ export default function LocationDetails() {
               <p className="cost-calculator__note">You won&apos;t be charged yet</p>
 
               {bookingError && <p className="form-error">{bookingError}</p>}
-              {bookingSuccess && <p className="cost-calculator__success">{bookingSuccess}</p>}
+              {bookingSuccess && <p className="cost-calculator__success">{bookingSuccess} <Link to="/reservations">View reservations</Link></p>}
 
               {costBreakdown && (
                 <div className="cost-calculator__breakdown">
@@ -396,9 +421,10 @@ export default function LocationDetails() {
               )}
             </form>
 
-            <button className="listing-report">
+            <button className="listing-report" onClick={() => setReportMessage("Thanks. We will review this listing.")}>
               <Icon name="close" size={14} /> Report this listing
             </button>
+            {reportMessage && <p className="cost-calculator__success">{reportMessage}</p>}
           </aside>
         </div>
       </div>

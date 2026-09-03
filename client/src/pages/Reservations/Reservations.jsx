@@ -61,6 +61,7 @@ export default function Reservations() {
   return (
     <main className="container reservations-page">
       <h1>My Reservations</h1>
+      <button className="btn btn-outline reservations-page__refresh" onClick={() => window.location.reload()}>Refresh reservations</button>
 
       {error && <p className="form-error">{error}</p>}
 

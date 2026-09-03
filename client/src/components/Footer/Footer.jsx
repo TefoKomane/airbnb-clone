@@ -46,6 +46,16 @@ const linkColumns = [
   },
 ];
 
+const footerUrls = {
+  "Help Center": "https://www.airbnb.com/help",
+  "Safety information": "https://www.airbnb.com/help/article/3066",
+  "Cancellation options": "https://www.airbnb.com/help/article/149",
+  "Try hosting": "http://localhost:5174/login",
+  "AirCover: protection for Hosts": "https://www.airbnb.com/aircover",
+  Newsroom: "https://news.airbnb.com/",
+  Careers: "https://careers.airbnb.com/",
+};
+
 export default function Footer() {
   return (
     <footer className="site-footer">
@@ -56,7 +66,7 @@ export default function Footer() {
             <ul>
               {column.links.map((link) => (
                 <li key={link}>
-                  <a href="#top">{link}</a>
+                  <a href={footerUrls[link] || "https://www.airbnb.com/help"} target="_blank" rel="noreferrer">{link}</a>
                 </li>
               ))}
             </ul>

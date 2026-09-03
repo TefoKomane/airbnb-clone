@@ -10,6 +10,7 @@ import "./Home.css";
 export default function Home() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
+  const [showAllDestinations, setShowAllDestinations] = useState(false);
 
   const goToSearch = (location) => {
     navigate(`/search?location=${encodeURIComponent(location)}`);
@@ -67,7 +68,7 @@ export default function Home() {
                 }}
               >
                 <h3>{item.title}</h3>
-                <button className="btn btn-outline experience-card__btn">
+                <button className="btn btn-outline experience-card__btn" onClick={() => goToSearch("")}>
                   {item.buttonLabel}
                 </button>
               </div>
@@ -79,7 +80,7 @@ export default function Home() {
         <section className="section shop-section">
           <div className="shop-section__text">
             <h2>Shop Airbnb gift cards</h2>
-            <button className="btn btn-dark">Learn more</button>
+            <button className="btn btn-dark" onClick={() => window.open("https://www.airbnb.com/giftcards", "_blank", "noopener,noreferrer")}>Learn more</button>
           </div>
           <div className="shop-section__cards">
             <div className="shop-card shop-card--1" />
@@ -95,7 +96,7 @@ export default function Home() {
           <div className="hosting-banner__overlay" />
           <div className="hosting-banner__content">
             <h2>Questions about hosting?</h2>
-            <button className="btn hosting-banner__btn">Ask a Superhost</button>
+            <button className="btn hosting-banner__btn" onClick={() => window.open("http://localhost:5174/login", "_blank", "noopener,noreferrer")}>Ask a Superhost</button>
           </div>
         </section>
 
@@ -117,7 +118,7 @@ export default function Home() {
           </div>
 
           <ul className="getaway-list">
-              {futureGetaways.destinations[activeTab].map((place) => (
+              {futureGetaways.destinations[activeTab].slice(0, showAllDestinations ? undefined : 4).map((place) => (
                 <li key={place.city}>
                   <button onClick={() => goToSearch(place.city)}>
                     <span className="getaway-list__city">{place.city}</span>
@@ -126,7 +127,9 @@ export default function Home() {
                 </li>
               ))}
               <li>
-                <button className="getaway-list__more">Show more</button>
+                <button className="getaway-list__more" onClick={() => setShowAllDestinations((visible) => !visible)}>
+                  {showAllDestinations ? "Show less" : "Show more"}
+                </button>
               </li>
             </ul>
         </section>

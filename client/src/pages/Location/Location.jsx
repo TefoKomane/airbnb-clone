@@ -16,6 +16,8 @@ export default function Location() {
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
   const [guests, setGuests] = useState(initialGuests);
   const [sortBy, setSortBy] = useState("recommended");
+  const [savedOnly, setSavedOnly] = useState(searchParams.get("saved") === "true");
+  const [compactView, setCompactView] = useState(false);
   const [accommodations, setAccommodations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -32,10 +34,12 @@ export default function Location() {
         const currentType = searchParams.get("type") || "";
         const currentMaxPrice = Number(searchParams.get("maxPrice")) || 0;
         const currentGuests = Number(searchParams.get("guests")) || 0;
+        const savedListings = JSON.parse(localStorage.getItem("airbnbSavedListings") || "[]");
         setAccommodations(data.filter((item) =>
           (!currentType || item.type === currentType) &&
           (!currentMaxPrice || item.price <= currentMaxPrice) &&
-          (!currentGuests || item.guests >= currentGuests)
+          (!currentGuests || item.guests >= currentGuests) &&
+          (!searchParams.get("saved") || savedListings.includes(item._id))
         ));
       } catch (err) {
         setError("Could not load listings right now. Please try again shortly.");
@@ -58,6 +62,15 @@ export default function Location() {
   };
 
   const activeLocation = searchParams.get("location");
+
+  const clearFilters = () => {
+    setLocationInput("");
+    setType("");
+    setMaxPrice("");
+    setGuests("");
+    setSavedOnly(false);
+    setSearchParams({});
+  };
 
   return (
     <main className="container location-page">
@@ -98,6 +111,12 @@ export default function Location() {
         </button>
       </form>
 
+      <div className="location-actions">
+        <label><input type="checkbox" checked={savedOnly} onChange={(event) => { setSavedOnly(event.target.checked); setSearchParams(event.target.checked ? { saved: "true" } : {}); }} /> Saved stays only</label>
+        <button type="button" className="btn btn-outline" onClick={() => setCompactView((compact) => !compact)}>{compactView ? "Comfortable view" : "Compact view"}</button>
+        <button type="button" className="btn btn-outline" onClick={clearFilters}>Clear filters</button>
+      </div>
+
       <h1 className="location-page__heading">
         {loading
           ? "Searching..."
@@ -124,7 +143,7 @@ export default function Location() {
         </p>
       )}
 
-      <div className="location-page__list">
+      <div className={`location-page__list ${compactView ? "location-page__list--compact" : ""}`}>
         {[...accommodations].sort((a, b) => {
           if (sortBy === "price-low") return a.price - b.price;
           if (sortBy === "price-high") return b.price - a.price;

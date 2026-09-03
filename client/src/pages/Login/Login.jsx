@@ -12,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login, register } = useAuth();
   const navigate = useNavigate();
@@ -87,11 +88,14 @@ export default function Login() {
             <label htmlFor="password">Password</label>
             <input
               id="password"
-              type="password"
+                type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+              <button type="button" onClick={() => setShowPassword((visible) => !visible)}>
+                {showPassword ? "Hide password" : "Show password"}
+              </button>
           </div>
 
           {error && <p className="form-error">{error}</p>}
