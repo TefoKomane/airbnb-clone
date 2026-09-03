@@ -11,7 +11,8 @@ import "./LocationDetails.css";
 const resolveImage = (path) => {
   if (!path) return "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80";
   if (path.startsWith("/uploads")) {
-    return `${import.meta.env.VITE_API_URL.replace("/api", "")}${path}`;
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+    return `${apiUrl.replace(/\/api\/?$/, "")}${path}`;
   }
   return path;
 };

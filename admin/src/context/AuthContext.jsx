@@ -8,7 +8,13 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [admin, setAdmin] = useState(() => {
     const stored = localStorage.getItem("airbnbAdmin");
-    return stored ? JSON.parse(stored) : null;
+    if (!stored) return null;
+    try {
+      return JSON.parse(stored);
+    } catch {
+      localStorage.removeItem("airbnbAdmin");
+      return null;
+    }
   });
 
   const login = async (email, password) => {
