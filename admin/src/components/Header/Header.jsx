@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import "./Header.css";
@@ -8,8 +8,14 @@ import "./Header.css";
 export default function Header() {
   const { admin, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem("airbnbAdminTheme") === "dark");
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode ? "dark" : "light";
+    localStorage.setItem("airbnbAdminTheme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   const handleLogout = () => {
     logout();
@@ -31,6 +37,13 @@ export default function Header() {
         </Link>
 
         <div className="admin-header__right">
+          <button
+            className="admin-header__theme-btn"
+            onClick={() => setDarkMode((enabled) => !enabled)}
+            aria-label={darkMode ? "Use light mode" : "Use dark mode"}
+          >
+            {darkMode ? "Light" : "Dark"}
+          </button>
           {admin ? (
             <>
               <span className="admin-header__greeting">{admin.username}</span>

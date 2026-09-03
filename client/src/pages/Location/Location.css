@@ -7,7 +7,7 @@
   align-items: flex-end;
   gap: 12px;
   margin-bottom: 24px;
-  max-width: 500px;
+  flex-wrap: wrap;
 }
 
 .location-filter label {
@@ -16,10 +16,21 @@
 
 .location-filter input {
   flex: 1;
+  min-width: 150px;
   padding: 10px 14px;
   border: 1px solid var(--color-border);
   border-radius: 999px;
   font-size: 14px;
+}
+
+.location-filter select,
+.location-filter input[type="number"] {
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
 }
 
 .location-filter .btn {

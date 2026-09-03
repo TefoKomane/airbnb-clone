@@ -30,6 +30,8 @@ The guest site is then available at `http://localhost:5173`, the host dashboard
 at `http://localhost:5174`, and the API health check at `http://localhost:5000/`.
 Copy each `.env.example` to `.env` before the first run and replace the server
 MongoDB and JWT values with your own credentials.
+The frontend price data is stored in USD and displayed in ZAR using
+`VITE_USD_TO_ZAR_RATE`; update that value when the exchange rate changes.
 
 ## About This Project
 

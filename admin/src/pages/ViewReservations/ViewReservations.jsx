@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../../api/axios.js";
 import { formatCurrency } from "../../utils/currency.js";
+import { useAuth } from "../../context/AuthContext.jsx";
 import "./ViewReservations.css";
 
 // shows every reservation made across all listings owned by the logged in host
@@ -10,6 +11,7 @@ export default function ViewReservations() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [deletingId, setDeletingId] = useState(null);
+  const { logout } = useAuth();
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -19,7 +21,12 @@ export default function ViewReservations() {
         const { data } = await api.get("/reservations/host");
         setReservations(data);
       } catch (err) {
-        setError("Could not load reservations right now.");
+        if (err.response?.status === 401) {
+          logout();
+          setError("Your session has expired. Please log in again.");
+        } else {
+          setError(err.response?.data?.message || "Could not load reservations right now.");
+        }
       } finally {
         setLoading(false);
       }

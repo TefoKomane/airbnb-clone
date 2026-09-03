@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Icon from "../Icon/Icon.jsx";
 import { formatCurrency } from "../../utils/currency.js";
+import { resolveImage } from "../../utils/images.js";
 import "./LocationCard.css";
 
 // used on the Location (search results) page
@@ -25,12 +26,7 @@ export default function LocationCard({ accommodation }) {
     images,
   } = accommodation;
 
-  const image =
-    images && images.length > 0
-      ? images[0].startsWith("/uploads")
-        ? `${(import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/api\/?$/, "")}${images[0]}`
-        : images[0]
-      : "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80";
+  const image = resolveImage(images?.[0], accommodation);
 
   return (
     <article className="location-card" onClick={() => navigate(`/listing/${_id}`)}>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import Icon from "../Icon/Icon.jsx";
@@ -9,8 +9,14 @@ import "./Header.css";
 export default function Header() {
   const [searchValue, setSearchValue] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem("airbnbTheme") === "dark");
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode ? "dark" : "light";
+    localStorage.setItem("airbnbTheme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
@@ -46,6 +52,13 @@ export default function Header() {
         </form>
 
         <div className="site-header__profile">
+          <button
+            className="site-header__theme-btn"
+            onClick={() => setDarkMode((enabled) => !enabled)}
+            aria-label={darkMode ? "Use light mode" : "Use dark mode"}
+          >
+            {darkMode ? "Light" : "Dark"}
+          </button>
           {!user && (
             <Link to="/login" className="site-header__host-link">
               Become a Host

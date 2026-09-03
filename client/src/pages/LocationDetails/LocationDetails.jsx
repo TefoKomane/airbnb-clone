@@ -5,19 +5,11 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import Icon from "../../components/Icon/Icon.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import { formatCurrency } from "../../utils/currency.js";
+import { getListingImages, resolveImage } from "../../utils/images.js";
 import "./LocationDetails.css";
 
 // turns a raw image path into something the browser can actually load,
 // whether it came from an uploaded file or a plain external URL
-const resolveImage = (path) => {
-  if (!path) return "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80";
-  if (path.startsWith("/uploads")) {
-    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-    return `${apiUrl.replace(/\/api\/?$/, "")}${path}`;
-  }
-  return path;
-};
-
 const fallbackImage = "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80";
 
 export default function LocationDetails() {
@@ -119,7 +111,7 @@ export default function LocationDetails() {
   if (error) return <p className="page-status">{error}</p>;
   if (!listing) return null;
 
-  const images = listing.images && listing.images.length > 0 ? listing.images : [null, null, null, null, null];
+  const images = getListingImages(listing);
   const [mainImage, ...smallImages] = images;
 
   return (

@@ -37,7 +37,10 @@ export default function Home() {
               <button
                 key={item.id}
                 className="inspiration-card"
-                style={{ backgroundColor: item.color }}
+                style={{
+                  backgroundColor: item.color,
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, .12), rgba(0, 0, 0, .32)), url(${item.image})`,
+                }}
                 onClick={() => goToSearch(item.title.split(" ")[0])}
               >
                 <div className="inspiration-card__image" />
@@ -58,7 +61,10 @@ export default function Home() {
               <div
                 key={item.id}
                 className="experience-card"
-                style={{ backgroundColor: item.color }}
+                style={{
+                  backgroundColor: item.color,
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, .18), rgba(0, 0, 0, .45)), url(${item.image})`,
+                }}
               >
                 <h3>{item.title}</h3>
                 <button className="btn btn-outline experience-card__btn">
