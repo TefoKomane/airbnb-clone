@@ -77,3 +77,11 @@
   background: var(--color-bg);
   color: var(--color-text);
 }
+
+.filters-toggle { display: none; }
+
+@media (max-width: 700px) {
+  .filters-toggle { display: inline-flex; margin-bottom: 12px; }
+  .location-filter:not(.location-filter--open) select,
+  .location-filter:not(.location-filter--open) input[type="number"] { display: none; }
+}

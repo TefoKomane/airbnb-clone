@@ -11,6 +11,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [showAllDestinations, setShowAllDestinations] = useState(false);
+  const quickDestinations = ["Cape Town", "Johannesburg", "Durban", "New York"];
 
   const goToSearch = (location) => {
     navigate(`/search?location=${encodeURIComponent(location)}`);
@@ -26,6 +27,11 @@ export default function Home() {
           <button className="btn hero__cta" onClick={() => goToSearch("")}>
             I&apos;m flexible
           </button>
+          <div className="hero__chips" aria-label="Popular destinations">
+            {quickDestinations.map((destination) => (
+              <button key={destination} onClick={() => goToSearch(destination)}>{destination}</button>
+            ))}
+          </div>
         </div>
       </section>
 

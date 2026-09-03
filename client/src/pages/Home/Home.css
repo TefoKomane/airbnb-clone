@@ -38,6 +38,26 @@
   padding: 12px 28px;
 }
 
+.hero__chips {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.hero__chips button {
+  padding: 8px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  color: #fff;
+  font-size: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.hero__chips button:hover { background: rgba(255, 255, 255, 0.2); }
+
 .section {
   padding: 48px 0;
   border-bottom: 1px solid var(--color-border);

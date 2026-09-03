@@ -31,6 +31,7 @@ export default function LocationDetails() {
   const [shareMessage, setShareMessage] = useState("");
   const [saved, setSaved] = useState(false);
   const [reportMessage, setReportMessage] = useState("");
+  const [selectedImage, setSelectedImage] = useState(0);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -141,7 +142,8 @@ export default function LocationDetails() {
   if (!listing) return null;
 
   const images = getListingImages(listing);
-  const [mainImage, ...smallImages] = images;
+  const mainImage = images[selectedImage] || images[0];
+  const smallImages = images.filter((_, index) => index !== selectedImage);
 
   return (
     <main>
@@ -174,9 +176,11 @@ export default function LocationDetails() {
           <div className="listing-gallery__grid">
             {smallImages.slice(0, 4).map((img, index) => (
               <img
-                key={index}
+                key={img}
                 src={resolveImage(img)}
                 alt={`Photo ${index + 2} of ${listing.title}`}
+                className="listing-gallery__thumbnail"
+                onClick={() => setSelectedImage(images.indexOf(img))}
                 onError={(event) => {
                   event.currentTarget.src = fallbackImage;
                 }}
@@ -364,17 +368,11 @@ export default function LocationDetails() {
 
               <div className="form-group">
                 <label htmlFor="guests">GUESTS</label>
-                <select
-                  id="guests"
-                  value={guestCount}
-                  onChange={(e) => setGuestCount(Number(e.target.value))}
-                >
-                  {Array.from({ length: listing.guests }, (_, i) => i + 1).map((n) => (
-                    <option key={n} value={n}>
-                      {n} guest{n !== 1 ? "s" : ""}
-                    </option>
-                  ))}
-                </select>
+                <div className="guest-stepper">
+                  <button type="button" onClick={() => setGuestCount((count) => Math.max(1, count - 1))} aria-label="Decrease guests">-</button>
+                  <span>{guestCount} guest{guestCount !== 1 ? "s" : ""}</span>
+                  <button type="button" onClick={() => setGuestCount((count) => Math.min(listing.guests, count + 1))} aria-label="Increase guests">+</button>
+                </div>
               </div>
 
               <button type="submit" className="btn btn-primary cost-calculator__reserve" disabled={submitting}>

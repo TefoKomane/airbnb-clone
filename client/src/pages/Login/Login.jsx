@@ -93,7 +93,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-              <button type="button" onClick={() => setShowPassword((visible) => !visible)}>
+              <button className="password-toggle" type="button" onClick={() => setShowPassword((visible) => !visible)}>
                 {showPassword ? "Hide password" : "Show password"}
               </button>
           </div>

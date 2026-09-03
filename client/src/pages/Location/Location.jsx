@@ -21,6 +21,7 @@ export default function Location() {
   const [accommodations, setAccommodations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
     const fetchAccommodations = async () => {
@@ -111,6 +112,10 @@ export default function Location() {
         </button>
       </form>
 
+      <button className="btn btn-outline filters-toggle" type="button" onClick={() => setFiltersOpen((open) => !open)}>
+        {filtersOpen ? "Hide filters" : "More filters"}
+      </button>
+
       <div className="location-actions">
         <label><input type="checkbox" checked={savedOnly} onChange={(event) => { setSavedOnly(event.target.checked); setSearchParams(event.target.checked ? { saved: "true" } : {}); }} /> Saved stays only</label>
         <button type="button" className="btn btn-outline" onClick={() => setCompactView((compact) => !compact)}>{compactView ? "Comfortable view" : "Compact view"}</button>
@@ -138,9 +143,10 @@ export default function Location() {
       {error && <p className="form-error">{error}</p>}
 
       {!loading && accommodations.length === 0 && !error && (
-        <p className="page-status">
-          No stays matched that search. Try a different location.
-        </p>
+        <div className="page-status">
+          <p>No stays matched that search. Try a different location.</p>
+          <button className="btn btn-primary" onClick={clearFilters}>Show all stays</button>
+        </div>
       )}
 
       <div className={`location-page__list ${compactView ? "location-page__list--compact" : ""}`}>

@@ -82,7 +82,23 @@ img {
   padding: 12px 20px;
   font-size: 14px;
   font-weight: 600;
-  transition: opacity 0.15s ease-in-out, background-color 0.15s ease-in-out;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px rgba(0, 0, 0, 0.14);
+}
+
+.btn:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(255, 56, 92, 0.35);
+  outline-offset: 3px;
 }
 
 .btn-primary {
@@ -135,6 +151,8 @@ img {
   border-radius: 8px;
   font-size: 14px;
   font-family: inherit;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 .form-group input:focus,
@@ -154,6 +172,18 @@ img {
   text-align: center;
   padding: 60px 20px;
   color: var(--color-text-muted);
+}
+
+.loading-shimmer {
+  min-height: 120px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, var(--color-bg-soft), var(--color-bg), var(--color-bg-soft));
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: -200% 0; }
 }
 
 .visually-hidden {
