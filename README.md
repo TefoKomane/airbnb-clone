@@ -8,6 +8,29 @@ Guest site: add your deployed client link here once available
 Admin dashboard: add your deployed admin link here once available
 Backend API: add your deployed server link here once available
 
+For local development, start the three services in separate terminals. If the
+computer or VS Code closes, repeat these commands from the project root:
+
+```
+cd server
+npm start
+```
+
+```
+cd client
+npm run dev -- --host localhost --port 5173
+```
+
+```
+cd admin
+npm run dev -- --host localhost --port 5174
+```
+
+The guest site is then available at `http://localhost:5173`, the host dashboard
+at `http://localhost:5174`, and the API health check at `http://localhost:5000/`.
+Copy each `.env.example` to `.env` before the first run and replace the server
+MongoDB and JWT values with your own credentials.
+
 ## About This Project
 
 This project recreates the core experience of Airbnb across three views: a home page, a search and location results page, and a detailed listing page with a functional booking flow. Alongside that sits a full admin dashboard that lets a host create, view, update, and delete their own listings, and see every reservation made against them.
