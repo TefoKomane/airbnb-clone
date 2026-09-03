@@ -6,7 +6,7 @@ A full-stack accommodation marketplace built as three coordinated applications:
 - `admin`: host-facing React dashboard for managing listings and viewing reservations.
 - `server`: Node.js, Express, and MongoDB API shared by both frontends.
 
-This project follows the supplied Airbnb clone brief. Guest and host workflows are separated while authentication, listings, images, pricing, and reservations remain connected through a real API and MongoDB database.
+Guest and host workflows are separated while authentication, listings, images, pricing, and reservations remain connected through a real API and MongoDB database.
 
 ## Project Status
 
@@ -24,7 +24,7 @@ Verified locally:
 - Legacy and missing image paths are normalized to working fallback galleries.
 - Both frontend applications produce successful Vite production builds.
 
-The project is an Airbnb-style educational clone. It is not a literal copy of Airbnb's proprietary production platform, private APIs, or payment infrastructure.
+The project is an independent Airbnb-style marketplace implementation. It is not a literal copy of Airbnb's proprietary production platform, private APIs, or payment infrastructure.
 
 ## Main Features
 
@@ -69,7 +69,7 @@ The project is an Airbnb-style educational clone. It is not a literal copy of Ai
 - Branded host favicon, manifest, theme color, and metadata.
 - Listing creation form with title, type, location, description, capacity, rooms, pricing, fees, amenities, feature flags, and images.
 - Client-side validation for required fields, numeric values, discounts, and image sizes.
-- Image previews before submission.
+- Image previews before saving.
 - Reset form action.
 - Listing update form pre-filled from MongoDB data.
 - Listing deletion with confirmation.
@@ -499,7 +499,7 @@ The project uses an Airbnb-inspired visual language for educational purposes. Do
 
 ## Validation and Quality Checks
 
-Run these checks before submission:
+Run these checks during development and before a release:
 
 ```powershell
 cd client
@@ -529,7 +529,7 @@ Manual smoke-test checklist:
 9. Create, update, filter, sort, and delete a listing from the admin dashboard.
 10. Test invalid dates, overlapping dates, over-capacity guests, invalid login, invalid registration, and oversized upload feedback.
 
-There is currently no automated Jest, Vitest, Supertest, or Playwright test suite in the repository. Production builds, Node syntax checks, live HTTP requests, and browser smoke testing have been used as the current validation layer. Adding automated tests is recommended before a production release.
+There is currently no automated Jest, Vitest, Supertest, or Playwright test suite in the repository. Production builds, Node syntax checks, live HTTP requests, and browser smoke testing provide the current validation layer. An automated test suite is recommended for long-term maintenance.
 
 ## Deployment Guide
 
@@ -564,64 +564,9 @@ Deploy the backend first, then configure both frontends to use its public URL.
 
 Update the deployed URLs in the Live URLs section below after deployment.
 
-## Rubric Coverage Checklist
+## Production Considerations
 
-### Frontend rubric: 140 marks
-
-- [x] Hero banner with clear flexible-search call to action.
-- [x] Inspiration section with destination cards and images.
-- [x] Experience sections with titles, imagery, and working actions.
-- [x] ShopAirbnb/gift-card section with working external action.
-- [x] Future getaway tabs with content in every tab and expandable lists.
-- [x] Footer with organized columns, working links, newsletter feedback, currency, and back-to-top.
-- [x] Location filter with URL-aware navigation.
-- [x] Property type, price, guest, saved-only, clear, compact, and sort controls.
-- [x] Location cards with image, title, location, amenities, ratings, price, save action, and navigation.
-- [x] Location details heading and subheading.
-- [x] Five-image responsive gallery with selectable thumbnails and fallbacks.
-- [x] Dynamic cost calculator with dates, guest count, fees, discount, and total.
-- [x] Accommodation, amenities, sleep, review, host, rule, safety, and cancellation sections.
-- [x] Header logo, search, profile menu, authentication links, and theme control.
-- [x] Guest login, registration, validation, logout, and reservation access.
-- [x] Responsive styling for desktop and mobile.
-- [x] Accessible focus states, keyboard card navigation, labels, and action feedback.
-- [x] Persistent dark mode, recent search memory, loading skeletons, and empty-state recovery.
-
-### Admin frontend rubric: 100 marks
-
-- [x] Branded header with navigation, host greeting, profile menu, logout, and theme control.
-- [x] Host login validation, role restriction, JWT session, and password visibility.
-- [x] Comprehensive create listing form.
-- [x] Required-field, numeric, discount, image-size, and feedback validation.
-- [x] Image upload selection and previews.
-- [x] Listing portfolio with details, update, delete, search, sort, refresh, and stats.
-- [x] Pre-filled update form with saved changes.
-- [x] Host reservation table with property filter, totals, revenue summary, refresh, CSV export, and deletion.
-- [x] Protected admin routing and expired-session handling.
-- [x] Responsive and consistent styling.
-
-### Backend rubric: 150 marks
-
-- [x] Modular controllers, models, routes, configuration, middleware, and utilities.
-- [x] Accommodation create, read, update, and delete operations.
-- [x] JWT login and protected route handling.
-- [x] Bcrypt password hashing.
-- [x] Host-role and listing-ownership authorization.
-- [x] Reservation create, read, and delete operations.
-- [x] Date, overlap, guest-capacity, and server-side pricing validation.
-- [x] Mongoose schemas and references.
-- [x] Central error handling and appropriate response codes.
-- [x] Multer image upload support.
-- [x] Server-side search filters and escaped location regex input.
-- [x] Environment-based configuration and CORS allow-list.
-- [x] Seed data and repeatable local setup.
-- [ ] Comprehensive automated endpoint and integration test suite.
-- [ ] Production deployment and monitoring evidence.
-- [ ] Production payment provider integration.
-
-## Known Limitations Before Submission
-
-The following items should be completed or explicitly explained in an assessment submission:
+The following items are recommended before a public production release:
 
 1. Add automated API and frontend tests, especially for authentication, ownership, reservations, overlap prevention, filters, and CRUD.
 2. Deploy the API, guest frontend, and admin frontend and record their public URLs.
@@ -632,7 +577,7 @@ The following items should be completed or explicitly explained in an assessment
 7. Replace sample credentials before public release and rotate the JWT secret.
 8. Review external links and replace educational placeholders with project-owned content where required.
 
-These limitations do not prevent local demonstration of the supplied CRUD, authentication, listing, reservation, image, and navigation requirements, but they matter for a production-grade deployment claim.
+These considerations do not prevent local use of the guest, host, listing, reservation, image, and navigation workflows, but they matter for a production-grade deployment.
 
 ## Live URLs
 

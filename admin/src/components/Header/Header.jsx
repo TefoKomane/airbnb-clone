@@ -33,7 +33,8 @@ export default function Header() {
     <header className="admin-header">
       <div className="admin-header__top container">
         <Link to={admin ? "/listings" : "/login"} className="admin-header__logo">
-          airbnb
+          <img src="/airbnb-logo.jfif" alt="Airbnb" />
+          <span>airbnb</span>
         </Link>
 
         <div className="admin-header__right">

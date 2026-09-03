@@ -186,6 +186,13 @@
   z-index: 2;
 }
 
+.shop-card--2 img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
 .shop-card--3 {
   background: linear-gradient(135deg, #f6d365, #fda085);
   top: 30px;

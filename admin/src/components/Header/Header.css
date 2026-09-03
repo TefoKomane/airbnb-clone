@@ -11,9 +11,19 @@
 }
 
 .admin-header__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 22px;
   font-weight: 700;
   color: var(--color-primary);
+}
+
+.admin-header__logo img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
 .admin-header__right {

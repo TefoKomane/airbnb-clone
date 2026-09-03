@@ -39,7 +39,7 @@ export default function Header() {
     <header className="site-header">
       <div className="site-header__inner container">
         <Link to="/" className="site-header__logo">
-          <Icon name="logo" size={28} color="#FF385C" filled />
+          <img src="/airbnb-logo.jfif" alt="Airbnb" />
           <span>airbnb</span>
         </Link>
 

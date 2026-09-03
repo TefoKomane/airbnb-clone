@@ -25,6 +25,13 @@
   flex-shrink: 0;
 }
 
+.site-header__logo img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
 .site-header__search {
   position: relative;
   display: flex;

@@ -91,7 +91,7 @@ export default function Home() {
           <div className="shop-section__cards">
             <div className="shop-card shop-card--1" />
             <div className="shop-card shop-card--2">
-              <Icon name="logo" size={26} color="#fff" filled />
+              <img src="/airbnb-logo.jfif" alt="Airbnb gift card logo" />
             </div>
             <div className="shop-card shop-card--3" />
           </div>
