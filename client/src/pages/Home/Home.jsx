@@ -82,6 +82,50 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Things to do on your trip */}
+        <section className="section things-section">
+          <div
+            className="things-card"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(0,0,0,0.28), rgba(0,0,0,0.52)), url(https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80)",
+            }}
+          >
+            <div className="things-card__body">
+              <h2>Things to do on your trip</h2>
+              <p>Discover unique activities and experiences wherever you go.</p>
+              <button
+                className="btn btn-outline things-card__btn"
+                onClick={() => goToSearch("")}
+              >
+                Explore experiences
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Things to do at home */}
+        <section className="section things-section">
+          <div
+            className="things-card"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(0,0,0,0.28), rgba(0,0,0,0.52)), url(https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80)",
+            }}
+          >
+            <div className="things-card__body">
+              <h2>Things to do at home</h2>
+              <p>Online experiences you can enjoy from anywhere in the world.</p>
+              <button
+                className="btn btn-outline things-card__btn"
+                onClick={() => goToSearch("")}
+              >
+                Explore online experiences
+              </button>
+            </div>
+          </div>
+        </section>
+
         {/* ShopAirbnb Section */}
         <section className="section shop-section">
           <div className="shop-section__text">
