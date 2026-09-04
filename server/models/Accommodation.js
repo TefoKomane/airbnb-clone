@@ -106,4 +106,10 @@ const accommodationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// indexes to speed up the most common queries:
+// host listing lookup, location search, and reservation date range queries
+accommodationSchema.index({ hostId: 1 });
+accommodationSchema.index({ location: 1 });
+accommodationSchema.index({ price: 1 });
+
 module.exports = mongoose.model("Accommodation", accommodationSchema);

@@ -48,4 +48,9 @@ reservationSchema.pre("validate", function (next) {
   next();
 });
 
+// indexes to speed up host and guest reservation lookups and date range overlap checks
+reservationSchema.index({ guest: 1 });
+reservationSchema.index({ host: 1 });
+reservationSchema.index({ accommodation: 1, checkIn: 1, checkOut: 1 });
+
 module.exports = mongoose.model("Reservation", reservationSchema);
