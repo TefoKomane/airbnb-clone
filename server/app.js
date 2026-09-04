@@ -12,9 +12,18 @@ const reservationRoutes = require("./routes/reservationRoutes");
 
 const app = express();
 const allowedOrigins = [
-  process.env.CLIENT_URL || "http://localhost:5173",
-  process.env.ADMIN_URL || "http://localhost:5174",
-];
+  // local development
+  "http://localhost:5173",
+  "http://localhost:5174",
+  // production Vercel deployments
+  "https://airbnb-clone-omega-wine.vercel.app",
+  "https://airbnb-clone-qw8t.vercel.app",
+  // allow any Vercel preview deployment for this project
+  /https:\/\/airbnb-clone.*\.vercel\.app$/,
+  // env-configured origins (set in Render dashboard)
+  process.env.CLIENT_URL,
+  process.env.ADMIN_URL,
+].filter(Boolean);
 
 app.disable("x-powered-by");
 app.use(helmet());

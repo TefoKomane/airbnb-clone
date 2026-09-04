@@ -1,8 +1,9 @@
 import axios from "axios";
 
 // central axios instance so the base URL only lives in one place
+// falls back to the deployed Render API if no env var is set at build time
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  baseURL: import.meta.env.VITE_API_URL || "https://airbnb-clone-api-0xoz.onrender.com/api",
 });
 
 // automatically attach the saved token to every request, if one exists

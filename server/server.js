@@ -18,9 +18,14 @@ const app = express();
 
 // allow requests from both the guest facing client and the admin dashboard
 const allowedOrigins = [
-  process.env.CLIENT_URL || "http://localhost:5173",
-  process.env.ADMIN_URL || "http://localhost:5174",
-];
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://airbnb-clone-omega-wine.vercel.app",
+  "https://airbnb-clone-qw8t.vercel.app",
+  /https:\/\/airbnb-clone.*\.vercel\.app$/,
+  process.env.CLIENT_URL,
+  process.env.ADMIN_URL,
+].filter(Boolean);
 
 app.use(
   cors({
