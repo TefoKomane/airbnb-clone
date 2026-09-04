@@ -4,7 +4,8 @@ const zarFormatter = new Intl.NumberFormat("en-ZA", {
   maximumFractionDigits: 0,
 });
 
-const usdToZarRate = Number(import.meta.env.VITE_USD_TO_ZAR_RATE || 16.0944);
+// use the env var if set, otherwise fall back to a current reference rate
+const usdToZarRate = Number(import.meta.env.VITE_USD_TO_ZAR_RATE) || 18.5;
 
 export const formatCurrency = (value, sourceCurrency = "USD") => {
   const amount = Number(value) || 0;
