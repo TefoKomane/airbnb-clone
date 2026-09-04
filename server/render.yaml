@@ -1,0 +1,28 @@
+services:
+  # Backend API — deployed as a Node.js web service on Render's free tier
+  - type: web
+    name: airbnb-clone-api
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Set these in the Render dashboard — do NOT commit real values here
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: PORT
+        value: 10000
+      # Set CLIENT_URL and ADMIN_URL to your deployed Vercel URLs after deployment
+      - key: CLIENT_URL
+        sync: false
+      - key: ADMIN_URL
+        sync: false
