@@ -51,7 +51,7 @@ const footerUrls = {
   "Help Center": "https://www.airbnb.com/help",
   "Safety information": "https://www.airbnb.com/help/article/3066",
   "Cancellation options": "https://www.airbnb.com/help/article/149",
-  "Try hosting": "http://localhost:5174/login",
+  "Try hosting": "https://airbnb-clone-qw8t.vercel.app/login",
   "AirCover: protection for Hosts": "https://www.airbnb.com/aircover",
   Newsroom: "https://news.airbnb.com/",
   Careers: "https://careers.airbnb.com/",

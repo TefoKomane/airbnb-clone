@@ -581,11 +581,9 @@ These considerations do not prevent local use of the guest, host, listing, reser
 
 ## Live URLs
 
-Add deployed URLs here after deployment:
-
-- Guest site: pending deployment
-- Host dashboard: pending deployment
-- Backend API: pending deployment
+- Guest site: https://airbnb-clone-omega-wine.vercel.app
+- Host dashboard: https://airbnb-clone-qw8t.vercel.app
+- Backend API: https://airbnb-clone-api-0xoz.onrender.com
 
 ## Git Workflow
 

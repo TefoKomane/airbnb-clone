@@ -102,7 +102,7 @@ export default function Home() {
           <div className="hosting-banner__overlay" />
           <div className="hosting-banner__content">
             <h2>Questions about hosting?</h2>
-            <button className="btn hosting-banner__btn" onClick={() => window.open("http://localhost:5174/login", "_blank", "noopener,noreferrer")}>Ask a Superhost</button>
+            <button className="btn hosting-banner__btn" onClick={() => window.open("https://airbnb-clone-qw8t.vercel.app/login", "_blank", "noopener,noreferrer")}>Ask a Superhost</button>
           </div>
         </section>
 
