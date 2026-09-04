@@ -75,9 +75,9 @@ export default function Header() {
             {darkMode ? "Light" : "Dark"}
           </button>
           {!user && (
-            <Link to="/login" className="site-header__host-link">
+            <a href="https://airbnb-clone-qw8t.vercel.app/login" target="_blank" rel="noreferrer" className="site-header__host-link">
               Become a Host
-            </Link>
+            </a>
           )}
 
           <button
