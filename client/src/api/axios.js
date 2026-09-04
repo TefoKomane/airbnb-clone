@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// central axios instance so the base URL only lives in one place
-// falls back to the deployed Render API if no env var is set at build time
+// central axios instance — base URL is hardcoded to the production API
+// so the app works on Vercel without any environment variable configuration
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://airbnb-clone-api-0xoz.onrender.com/api",
+  baseURL: "https://airbnb-clone-api-0xoz.onrender.com/api",
 });
 
 // automatically attach the saved token to every request, if one exists

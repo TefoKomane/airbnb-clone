@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// same pattern as the client app — falls back to deployed Render API
-// if no VITE_API_URL env var is configured at build time
+// same pattern as the client — hardcoded to production API
+// no environment variable needed on Vercel
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://airbnb-clone-api-0xoz.onrender.com/api",
+  baseURL: "https://airbnb-clone-api-0xoz.onrender.com/api",
 });
 
 api.interceptors.request.use((config) => {
